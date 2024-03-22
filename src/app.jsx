@@ -1,17 +1,34 @@
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { CssBaseline } from '@mui/material';
-import TopAppBar from './components/base/TopAppBar';
-import LeftDrawer from './components/base/LeftDrawer';
-import BaseComponent from './components/base/BaseComponent';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { CssBaseline } from "@mui/material";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import BaseComponent from "./components/base/BaseComponent";
+import Profile from "./components/pages/normalUser/profile/Profile";
+import SignIn from "./components/pages/signIn/SignIn";
+import Home from "./components/pages/home/Home";
+import Facilities from "./components/pages/normalUser/profile/Facilities";
+import Panel from "./components/pages/normalUser/profile/Panel";
+import personalInformation from "./components/pages/normalUser/profile/PersonalInformation";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <BaseComponent />,
+    children: [
+      { path: "profile", element: <Profile /> },
+      { path: "signin", element: <SignIn /> },
+      { path: "home", element: <Home /> },
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <CssBaseline/>
-    <BaseComponent/>
-  </React.StrictMode>,
-)
+    <CssBaseline />
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);

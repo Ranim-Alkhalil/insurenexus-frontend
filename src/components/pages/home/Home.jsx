@@ -1,3 +1,8 @@
-export default function Home(props){
-    return <h1>I AM HOME</h1>
+import { Typography } from "@mui/material";
+import { useContext } from "react";
+import { GlobalStates } from "../../base/BaseComponent";
+
+export default function Home(props) {
+  const { user } = useContext(GlobalStates);
+  return <Typography>{user.firstName}</Typography>;
 }
