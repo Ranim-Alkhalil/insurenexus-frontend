@@ -3,8 +3,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 export default function TopAppBar(props) {
   return (
-    <AppBar position="static">
-      <Toolbar>
+    <AppBar  position="static" sx={{backgroundColor:"#0f3554"}}> 
+      <Toolbar >
         <IconButton
           size="large"
           edge="start"
@@ -15,10 +15,13 @@ export default function TopAppBar(props) {
         >
           <MenuIcon />
         </IconButton>
+        <img height="60px" src="/logo.png"/>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          News
+          InsureNexus
         </Typography>
+        <Button color="inherit" sx={{marginRight:2}}>Sign In</Button>
+        <Button color="inherit">Sign Up</Button>
       </Toolbar>
     </AppBar>
-  );
+  );
 }
