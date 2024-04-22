@@ -58,7 +58,7 @@ color: #919191;
 .hr_style{
   border: 10px;
 }
-/*section2**/
+
 
 .hr_style {
   border: none; 
@@ -75,7 +75,6 @@ color: #919191;
 font-size: 40px;
   text-align: center;
   color:rgb(13, 13, 59);
-padding-left: 450px;
   font-weight: bold;
 }
 .p2style{
@@ -85,22 +84,103 @@ color: #919191;
 margin-bottom: 50px;
 
 }
-.companies_section{
-  margin-top: 60px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-
+.companies_section {
+  text-align: center;
 }
-.companies_info{
-  margin-top: 30px;
-  border:#d3d1d1 solid 2px;
-  width: 300px;
-  height: 300px;
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+  justify-content: center;
+  margin:  50px; 
+}
+
+.companies_info {
+  border: #d3d1d1 solid 2px;
   border-radius: 30px;
-  margin-right: -10px;
   box-shadow: rgba(8, 34, 46, 0.12) 0px 2px 4px 0px, rgba(8, 34, 46, 0.12) 0px 2px 16px 0px;
 }
+.companies_info .customButtonColor{
+height: 40px;
+margin-bottom:  10px;
+}
+.companies_name{
+  margin-top: 30px;
+  font-weight: bold;
+font-size: 25px;
+color:rgb(13, 13, 59);
+
+}
+
+@media screen and (max-width: 640px) {
+  .companies_section {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .center_div {
+    width: 90%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .h3style {
+    text-align: center;
+    width: 90%;
+
+    font-size: 35px;
+  }
+
+  .p1style {
+    margin-right: 0;
+    width: 90%;
+  }
+
+  .buttons {
+    margin-top: 20px;
+    margin-right: 0;
+  }
+
+  .pic-container {
+    text-align: center;
+  }
+
+  .pic {
+    width: 90%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .section2 {
+    margin-top: 50px;
+  }
+
+  .grid-container {
+    margin: 20px 0;
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+
+  .companies_info {
+    margin: 0 10px;
+  }
+
+  .companies_name {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+
+  .customButtonColor {
+    height: 40px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+}
+
 .custom-navbar {
   background-color:  rgba(15,53,84,1) !important; 
 
