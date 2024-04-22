@@ -18,6 +18,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BaseComponent/>
 
 
+{/* <Connect /> */}
 <Company />
+
   </React.StrictMode>,
 )

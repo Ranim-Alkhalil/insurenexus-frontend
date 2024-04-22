@@ -1,14 +1,31 @@
-
-/*images */
+import React, { useState, useEffect } from 'react';
 import logo from './image/logo.jpeg';
 import cover from './image/cover.jpg';
 import company from './image/company.jpg';
-
-import './design/Style.css';
-
-
+import './design/_company.css';
 
 export default function Company(props) {
+  const [companyInfo, setCompanyInfo] = useState(null);
+
+  useEffect(() => {
+  
+    fetchCompanyInfo('Total Insurance'); //  company name
+  }, []);
+
+  const fetchCompanyInfo = async (companyName) => {
+    try {
+      const response = await fetch(`http://localhost:3004/company-info/${companyName}`);
+      if (response.ok) {
+        const data = await response.json();
+        setCompanyInfo(data);
+      } else {
+        console.error('Failed to fetch company information:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching company information:', error);
+    }
+  };
+
   return (
     <>
       <html lang="en">
@@ -34,34 +51,46 @@ export default function Company(props) {
               <a className="navbar-brand" href="#">
                 <img src={logo} alt="Logo" width="50" height="50" className="image-logo"  />
                   <span style={{ color: 'white' }}>InsureNexus</span>
-               
               </a>
             </div>
           </nav>
         
-
           <div className="page">
             <div className="cover">
               <img src={cover} alt="" />
             </div>
-{/* for line under the cover photo */}
-            <div className="line"></div>
-
+            <div className="hoeizntal"></div>
             <div className="compay_image">
-              <img src={company} alt="" />
+            
+              {companyInfo ? (
+                <img src={companyInfo.logo} alt="Company Logo" />
+              ) : (
+                <p>Loading logo...</p>
+              )}
+
               <caption>
                 <div className="c_name">
-                  <span>Company Name</span>
+                  <span>{companyInfo ? companyInfo.name : 'Company Name'}</span>
+                 
                   <div className="box_info">
-                    company infoooo Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil, incidunt! Ducimus
-                    accusantium quaerat voluptatibus pariatur, tempore iste distinctio eveniet enim? Distinctio vitae
-                    assumenda ad nostrum odit, adipisci incidunt voluptatibus repudiandae.
+                    {companyInfo ? (
+                      <>
+                        <ul>
+                          <li><strong>Description:</strong> {companyInfo.description}</li>
+                          <li><strong>Phone Number:</strong> {companyInfo.phone_number}</li>
+                          <li><strong>Email:</strong> {companyInfo.email}</li>
+                          <li><strong>Address:</strong> {companyInfo.address}</li>
+                          <li><strong>Fax:</strong> {companyInfo.fax}</li>
+                          <li><strong>Mail:</strong> {companyInfo.mail}</li>
+                        </ul>
+                      </>
+                    ) : (
+                      'Loading...'
+                    )}
                   </div>
                 </div>
               </caption>
             </div>
-
-
             <div className="cards">
               <div className="card mb-3" style={{ maxWidth: '540px' }}>
                 <div className="row g-0">
@@ -71,17 +100,16 @@ export default function Company(props) {
                   <div className="col-md-8">
                     <div className="card-body">
                       <h5 className="card-title">Health</h5>
-                      <p className="text"  >
-                        .....Insurance - Jordan offers medical insurance programs specifically designed to meet the needs of
-                        all institutions and individuals in Jordan, through medical insurance programs that aim to provide
-                        the highest level of insurance protection for individuals and their families in the face of the
-                        continuous escalation in medical treatment costs.
-                      </p>
+                      {/*  service name */}
+                      {companyInfo ? (
+                        <p>{companyInfo.service_name}</p>
+                      ) : (
+                        <p>Loading service name...</p>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
-
               <div className="card mb-3" style={{ maxWidth: '540px' }}>
                 <div className="row g-0">
                   <div className="col-md-4">
@@ -90,20 +118,15 @@ export default function Company(props) {
                   <div className="col-md-8">
                     <div className="card-body">
                       <h5 className="card-title">Cars</h5>
-                      <p className="text">
-                        ..... Insurance - Jordan offers insurance programs.... specifically designed to meet the needs of all
-                        institutions and individuals in Jordan, through insurance programs.... aiming to provide the highest
-                        level of insurance protection for individuals and their families in the face of the continuous
-                        escalation in costs.. ....
-                      </p>
+                      {/* code for my content */}
                     </div>
                   </div>
                 </div>
               </div>
-
-              <i className="ri-arrow-right-double-line"></i>
+             
             </div>
           </div>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         </body>
       </html>
     </>
