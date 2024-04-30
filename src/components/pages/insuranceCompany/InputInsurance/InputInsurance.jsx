@@ -1,33 +1,38 @@
 import {
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
 
 export default function InputInsurance(props) {
   return (
-    <div>
+    <Stack mt={4}>
+      <Typography variant="h2" color={"#0f3554"} ml={3}>
+        Input Information
+      </Typography>
       <form>
-        <Table>
+        <Table sx={{ mt: 8 }}>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                insurance type
+              <TableCell sx={{ fontSize: "2rem", color: "#0f3554" }}>
+                Insurance type
               </TableCell>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                programs
+              <TableCell sx={{ fontSize: "2rem", color: "#0f3554" }}>
+                Programs
               </TableCell>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                classes
+              <TableCell sx={{ fontSize: "2rem", color: "#0f3554" }}>
+                Classes
               </TableCell>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                facilities
+              <TableCell sx={{ fontSize: "2rem", color: "#0f3554" }}>
+                Facilities
               </TableCell>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                links
+              <TableCell sx={{ fontSize: "2rem", color: "#0f3554" }}>
+                Links
               </TableCell>
             </TableRow>
           </TableHead>
@@ -41,7 +46,6 @@ export default function InputInsurance(props) {
                   sx={{
                     width: 300,
                   }}
-                  InputProps={{ sx: { height: 80 } }}
                 />
               </TableCell>
               <TableCell>
@@ -52,7 +56,6 @@ export default function InputInsurance(props) {
                   sx={{
                     width: 300,
                   }}
-                  InputProps={{ sx: { height: 80 } }}
                 />
               </TableCell>
               <TableCell>
@@ -63,7 +66,6 @@ export default function InputInsurance(props) {
                   sx={{
                     width: 300,
                   }}
-                  InputProps={{ sx: { height: 80 } }}
                 />
               </TableCell>
               <TableCell>
@@ -74,7 +76,6 @@ export default function InputInsurance(props) {
                   sx={{
                     width: 300,
                   }}
-                  InputProps={{ sx: { height: 80 } }}
                 />
               </TableCell>
               <TableCell>
@@ -85,13 +86,12 @@ export default function InputInsurance(props) {
                   sx={{
                     width: 300,
                   }}
-                  InputProps={{ sx: { height: 80 } }}
                 />
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </form>
-    </div>
+    </Stack>
   );
 }

@@ -44,8 +44,7 @@ export default function BaseComponent(props) {
     ValidateSessionApi({ sessionId: sessionId }).then(
       (res) => {
         if (!res.data.error) {
-          setUser({ ...user, signedIn: true });
-          GetUserInfo(sessionId).then(
+          GetUserInfo().then(
             (res) => {
               setUser({
                 ...user,
@@ -53,11 +52,8 @@ export default function BaseComponent(props) {
                 signedIn: true,
                 sessionId: res.data.sessionId,
               });
-              if (pathname === "/signin") {
-                navigate("/home");
-              } else {
-                navigate(pathname);
-              }
+              if (pathname === "/signin") navigate("/you");
+              else navigate(pathname);
               setLoading(false);
             },
             (err) => {}

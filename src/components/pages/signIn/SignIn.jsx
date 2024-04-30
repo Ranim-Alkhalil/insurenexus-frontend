@@ -28,7 +28,7 @@ export default function SignIn(props) {
       (res) => {
         if (!res.data.error) {
           localStorage.setItem("sessionId", res.data.sessionId);
-          GetUserInfo(res.data.sessionId).then(
+          GetUserInfo().then(
             (res) => {
               setUser({
                 ...user,
@@ -36,6 +36,7 @@ export default function SignIn(props) {
                 signedIn: true,
                 sessionId: res.data.sessionId,
               });
+              console.log("navigating to home");
               navigate("/home");
             },
             (err) => {}

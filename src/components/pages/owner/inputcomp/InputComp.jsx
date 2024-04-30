@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import {
   Button,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 
-export default function inputComp(props) {
+export default function InputComp(props) {
   const [rows, setRows] = useState([{}]);
 
   const addRow = () => {
@@ -26,9 +28,12 @@ export default function inputComp(props) {
   };
 
   return (
-    <div>
+    <Stack mt={5}>
+      <Typography variant="h2" color={"#0f3554"} ml={3}>
+        Input company
+      </Typography>
       <form>
-        <Table>
+        <Table sx={{ mt: 5 }}>
           <TableHead>
             <TableRow>
               <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
@@ -78,11 +83,11 @@ export default function inputComp(props) {
           </TableBody>
         </Table>
         <div style={{ justifyContent: "right", marginTop: "10" }}>
-          <Button variant="contained" endIcon={<SendIcon />}>
+          <Button variant="contained" endIcon={<SendIcon />} sx={{ mt: 5 }}>
             Send
           </Button>
         </div>
       </form>
-    </div>
+    </Stack>
   );
 }
