@@ -9,14 +9,14 @@ import "./home_page.css";
 
 export default function Home_page() {
   return (
-    <>
-      <div className="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+    <div className="container-xxl home-container">
+      <div className=" p-md-5 section1 mb-4   ">
         <div className="row align-items-center">
-          <div className="col-lg-6">
+          <div className="col-lg-6 col-md-12">
             <h3 className="display-4 h1style_home fst-italic">
               Explore Leading Insurance Companies{" "}
             </h3>
-            <p className="lead p1style_home my-3">
+            <p className="p1style_home my-3">
               Explore Leading Insurance Companies: No matter your interests, our
               collective expertise has you covered
             </p>
@@ -34,8 +34,8 @@ export default function Home_page() {
               </svg>
             </button>
           </div>
-          <div className="col-lg-6">
-            <img src={p10} alt="pic9" className="img-fluid" />
+          <div className="col-4">
+            <img src={p10} className=" img-fluid" />
           </div>
         </div>
       </div>
@@ -48,14 +48,11 @@ export default function Home_page() {
         </h4>
       </div>
 
-      <div className="health_section">
+      <div className="health_section   d-flex mt-5">
         <div>
           <p className="p_style_home">Taking care</p>
           <h5 className="h5style_home">OF YOUR FAMILY</h5>
           <div className="hr_style"></div>
-        </div>
-
-        <div className="sub_section_1">
           <p className="p_style_health">
             Recognizing the importance of every detail in shaping family
             well-being, InsureNexus prioritizes crafting insurance plans with
@@ -65,30 +62,29 @@ export default function Home_page() {
             providing exceptional service, solidifying our pledge to offer
             comprehensive support throughout your healthcare journey.
           </p>
-          <div className="col-lg-6">
-            <img src={p8} alt="pic7" className="img-fluid2" />
-          </div>
+        </div>
+        <div className="col-4 family-img">
+          <img src={p8} className="img-fluid " />
         </div>
       </div>
 
-      <div className="car_section">
-        <div className="img">
-          <img src={p11} alt="pic7" className="img-fluid3" />
+      <div className="car_section d-flex justify-content-center  align-items-center">
+        <div className="col-4">
+          <img src={p11} className="img-fluid" />
         </div>
+
         <div>
           <p className="p_style_home">Taking care</p>
           <h5 className="h5style_home">OF YOUR CAR</h5>
           <div className="hr_style"></div>
-          <div className="sub_section_2">
-            <p className="p_style_car">
-              InsureNexus, the leading insurance website, offers an invaluable
-              opportunity to protect your vehicle. Whether your car is
-              luxurious, a powerful SUV, or a reliable family car, InsureNexus
-              provides comprehensive car insurance coverage that surpasses any
-              other. We offer a comprehensive range of premium services and
-              coverage for your utmost convenience.
-            </p>
-          </div>
+          <p className="p_style_car">
+            InsureNexus, the leading insurance website, offers an invaluable
+            opportunity to protect your vehicle. Whether your car is luxurious,
+            a powerful SUV, or a reliable family car, InsureNexus provides
+            comprehensive car insurance coverage that surpasses any other. We
+            offer a comprehensive range of premium services and coverage for
+            your utmost convenience.
+          </p>
         </div>
       </div>
 
@@ -200,25 +196,22 @@ export default function Home_page() {
         </div>
       </div>
 
-      <div className="rating">
+      <div className="rating d-flex">
         {" "}
         <div className="rating_section_p">
           <h4 className="rating_title">
             A Transparent Measure of Insurance <br></br>Companies Performance{" "}
           </h4>
-          <p
-            className="lead p1style_home  my-3"
-            style={{ fontFamily: "Yeseva One" }}
-          >
+          <p className=" p1style_home " style={{ fontFamily: "Yeseva One" }}>
             User ratings offer transparent feedback, empowering informed
             decisions based on collective experiences. They foster trust,
             driving companies to improve and meet customer needs.
           </p>
         </div>
-        <div>
-          <img src={p12} className="p12" />
+        <div className="rating_img">
+          <img src={p12} className="p12 col-4 " />
         </div>
       </div>
-    </>
+    </div>
   );
 }
