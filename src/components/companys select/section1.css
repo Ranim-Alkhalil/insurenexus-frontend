@@ -140,10 +140,7 @@ color:rgb(13, 13, 59);
     width: 90%;
   }
 
-  .buttons {
-    margin-top: 20px;
-    margin-right: 0;
-  }
+ 
 
   .pic-container {
     text-align: center;
@@ -222,3 +219,155 @@ color:rgb(13, 13, 59);
 }
 .page-item{margin-top: 10px;
   margin-bottom: 10px;}
+  @media screen and (max-width: 1200px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .center_div {
+      width: 90%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+  
+    
+  
+    .pic-container {
+      text-align: center;
+    }
+  
+    .pic {
+      width: 90%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  
+    .section2 {
+      margin-top: 50px;
+    }
+  
+    .grid-container {
+      margin: 20px 0;
+      grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+  
+    .companies_info {
+      margin: 0 10px;
+    }
+  
+    .companies_name {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  
+    .customButtonColor {
+      height: 40px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+      .h3style {
+      text-align: left;
+      width: 100%;
+      font-size: 90px;
+    }
+  
+    .p1style {
+      font-size: 30px;
+      width: 100%;
+      
+    }
+  
+    .h4_style{
+      margin-top: 90px;
+font-size: 60px;
+  text-align: center;
+  color:rgb(13, 13, 59);
+  font-weight: bold;
+
+    }
+  .p2style{
+    text-align: center;
+    font-size: 30px;
+  color: #919191;
+  margin-bottom: 50px;
+  }
+  }
+  
+  @media screen and (max-width: 1669px) {
+    .container {
+      flex-direction: row;
+      align-items: center;
+    }
+  
+    .center_div {
+      width: 80%;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+  
+    .h3style {
+      text-align: left;
+      width: 100%;
+      font-size: 90px;
+    }
+  
+    .p1style {
+      font-size: 30px;
+      width: 100%;
+      
+    }
+  
+    .h4_style{
+      margin-top: 90px;
+font-size: 60px;
+  text-align: center;
+  color:rgb(13, 13, 59);
+  font-weight: bold;
+
+    }
+    .p2style{
+      text-align: center;
+      font-size: 30px;
+    color: #919191;
+    margin-bottom: 50px;
+    
+    }
+    .pic-container {
+      text-align: left;
+    }
+  
+    .pic {
+      width: 80%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  
+    .section2 {
+      margin-top: 60px;
+    }
+  
+    .grid-container {
+      margin: 30px 0;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+  
+    .companies_info {
+      margin: 0 20px;
+    }
+  
+    .companies_name {
+      margin-top: 25px;
+      font-size: 23px;
+    }
+  
+    .customButtonColor {
+      height: 45px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+  }
+  
