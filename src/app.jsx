@@ -11,7 +11,7 @@ ReactDOM.render(
   <React.StrictMode>
     <CssBaseline />
     <BaseComponent />
-    <Home_page />
+    <Header />
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -297,7 +297,7 @@
     background: #cd9e51;
   }}
 
-  @media screen and (max-width: 1669px) {
+  @media screen and (max-width: 1697px) {
     
    .p1style_home{
     font-size: 23px;   }
@@ -359,5 +359,8 @@ padding-right: 30px;
     }
     .rating .p1style_home {
       font-size: 27px;
+  }
+  .rating {
+    margin: left 900px !important ;
   }
 }

@@ -20,26 +20,18 @@ export default function Header() {
 
   return (
     <>
-      <section className="container">
-        <div className="center_div">
-          <h3 className="h3style">Experience the thrill of choice!</h3>
-          <p className="p1style">
-            Explore our website, where the best insurance companies unite under
-            one roof for you to select from.
-          </p>
-        </div>
-
-        <div className="pic-container">
-          <img src={pic1} className="pic" alt="Insurance" />
+      <section className="shadow-section">
+        <div className=" center_div">
+          <h3 className="h3style pt-5 pb-5">
+            Discover trusted <br></br>insurance company!
+          </h3>
         </div>
       </section>
 
       <section className="section2">
-        <hr className="hr_style" />
-
-        <h4 className="h4_style"> Best Health Insurance Companies</h4>
-        <p className="p2style">
-          see which insurance companies ranked the highest on Insure
+        <p className="p2style mt-5">
+          Explore top-rated insurance providers<br></br> and find the perfect
+          match for your needs{" "}
         </p>
 
         <div className="companies_section">

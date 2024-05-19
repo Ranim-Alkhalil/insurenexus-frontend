@@ -1,34 +1,30 @@
-.center_div{
-  width:100%;
-  font-family: "Yeseva One";
+.shadow-section{
+  box-shadow: 0 10px 20px -10px rgba(136, 134, 134, 0.8);
   
+
 }
-.h3style{
-  width: 600px;
-  font-size: 80px;
+.center_div{
+  font-family: "Yeseva One";
+text-align: center;  
+      background-color:#f3d993 ;
+}
+.h3style{    
+
+  font-size: 80px !important;
   color:rgb(7, 7, 37);
   font-weight: bold;
   text-shadow: 2px 2px rgb(66, 66, 66);
 
 }
 .p1style{
-  margin-right: 150px;
-  width:600px;
+  text-align: center;  
+
   height: 70px;
   font-size: 20px;
   margin-bottom: 30px;
 color: #919191;
 
 }
-
- 
-  
-  .pic {    
-    box-shadow: -10px 5px 1px rgba(15, 53, 84, 1);
-    width: 450px;
-    height: 150%;
-  }
-  
 
 
 .customButtonColor {
@@ -45,14 +41,11 @@ color: #919191;
 
 }
 
-.buttons{
-  margin-top: 40px;
 
-}
 .container{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content:center;
   align-items: center;
 }
 .hr_style{
@@ -79,7 +72,7 @@ font-size: 40px;
 }
 .p2style{
   text-align: center;
-  font-size: 20px;
+  font-size: 30px;
 color: #919191;
 margin-bottom: 50px;
 
@@ -113,261 +106,13 @@ color:rgb(13, 13, 59);
 
 }
 
-@media screen and (max-width: 640px) {
-  .companies_section {
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+@media   (min-width: 1600px){
+  .h3style{
+font-size: 110px !important;
+padding-top: 50px !important;
+padding-bottom: 60px !important;
   }
-  .container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .center_div {
-    width: 90%;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .h3style {
-    text-align: center;
-    width: 90%;
-
-    font-size: 35px;
-  }
-
-  .p1style {
-    margin-right: 0;
-    width: 90%;
-  }
-
- 
-
-  .pic-container {
-    text-align: center;
-  }
-
-  .pic {
-    width: 90%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .section2 {
-    margin-top: 50px;
-  }
-
-  .grid-container {
-    margin: 20px 0;
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-  }
-
-  .companies_info {
-    margin: 0 10px;
-  }
-
-  .companies_name {
-    margin-top: 20px;
-    font-size: 20px;
-  }
-
-  .customButtonColor {
-    height: 40px;
-    margin-bottom: 10px;
-    font-size: 12px;
-  }
-}
-
-.custom-navbar {
-  background-color:  rgba(15,53,84,1) !important; 
-
-}
-
-.custom-button {
-  margin-left: 10px;
-  border-color: white;
-  color: white;
-  border-color:#cbb26b ;
-}
-
-
-
-.custom-button:hover {
-  background-color: #cbb26b;
-}
-.Page{
-  color: rgba(15,53,84,1) !important;
-}
-
-.pagination {
-  background-color: rgba(15,53,84,1);
-  color:  rgba(15,53,84,1);
-  text-align: center;
-  display: flex !important;
-  justify-content: center !important;
- margin-top: 50px !important;
-  margin-bottom: 50px !important;
-}
-
-.page-link {
-  color: rgba(15,53,84,1);
-}
-
-.page-item.disabled .page-link {
-  color:  rgba(15,53,84,1); 
-  
-}
-.page-item{margin-top: 10px;
-  margin-bottom: 10px;}
-  @media screen and (max-width: 1200px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .center_div {
-      width: 90%;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-  
-  
-    
-  
-    .pic-container {
-      text-align: center;
-    }
-  
-    .pic {
-      width: 90%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-  
-    .section2 {
-      margin-top: 50px;
-    }
-  
-    .grid-container {
-      margin: 20px 0;
-      grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-    }
-  
-    .companies_info {
-      margin: 0 10px;
-    }
-  
-    .companies_name {
-      margin-top: 20px;
-      font-size: 20px;
-    }
-  
-    .customButtonColor {
-      height: 40px;
-      margin-bottom: 10px;
-      font-size: 12px;
-    }
-      .h3style {
-      text-align: left;
-      width: 100%;
-      font-size: 90px;
-    }
-  
-    .p1style {
-      font-size: 30px;
-      width: 100%;
-      
-    }
-  
-    .h4_style{
-      margin-top: 90px;
-font-size: 60px;
-  text-align: center;
-  color:rgb(13, 13, 59);
-  font-weight: bold;
-
-    }
   .p2style{
-    text-align: center;
-    font-size: 30px;
-  color: #919191;
-  margin-bottom: 50px;
+    font-size: 30px !important;
   }
-  }
-  
-  @media screen and (max-width: 1669px) {
-    .container {
-      flex-direction: row;
-      align-items: center;
-    }
-  
-    .center_div {
-      width: 80%;
-      text-align: left;
-      margin-bottom: 20px;
-    }
-  
-    .h3style {
-      text-align: left;
-      width: 100%;
-      font-size: 90px;
-    }
-  
-    .p1style {
-      font-size: 30px;
-      width: 100%;
-      
-    }
-  
-    .h4_style{
-      margin-top: 90px;
-font-size: 60px;
-  text-align: center;
-  color:rgb(13, 13, 59);
-  font-weight: bold;
-
-    }
-    .p2style{
-      text-align: center;
-      font-size: 30px;
-    color: #919191;
-    margin-bottom: 50px;
-    
-    }
-    .pic-container {
-      text-align: left;
-    }
-  
-    .pic {
-      width: 80%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-  
-    .section2 {
-      margin-top: 60px;
-    }
-  
-    .grid-container {
-      margin: 30px 0;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    }
-  
-    .companies_info {
-      margin: 0 20px;
-    }
-  
-    .companies_name {
-      margin-top: 25px;
-      font-size: 23px;
-    }
-  
-    .customButtonColor {
-      height: 45px;
-      margin-bottom: 15px;
-      font-size: 14px;
-    }
-  }
-  
+}
