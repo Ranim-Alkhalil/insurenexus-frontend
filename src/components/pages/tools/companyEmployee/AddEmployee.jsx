@@ -1,19 +1,11 @@
-import {
-  Autocomplete,
-  Button,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useEffect, useState } from "react";
-import InputText from "../../createUser/InputText";
+import { Button, Stack, TextField, Typography } from "@mui/material";
+
+import { useState } from "react";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { getSessionId } from "../../../../api/SessionIdUtils";
 
-export default function AddInsuranceCompUser(props) {
-  const [company_name, setcompany_name] = useState(null);
-  const [options, setOptions] = useState([]);
+export default function CreateEmp(props) {
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,7 +15,7 @@ export default function AddInsuranceCompUser(props) {
   const [errorFields, setErrorFields] = useState([]);
   const nameRegex = /^[a-zA-Z]{1,15}$/;
   const NIDRegex = /^\d{10}$/;
-  const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
+  const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   const phoneRegex = /^07\d{8}$/;
   const handleAdd = () => {
     console.log(firstName);
@@ -40,14 +32,14 @@ export default function AddInsuranceCompUser(props) {
     if (!nationalID.trim()) errors.push("national_id");
     if (!email.trim()) errors.push("email");
     if (!phoneNum.trim()) errors.push("phone_num");
-    if (!company_name) errors.push("company_name");
+
     console.log(errors);
     setErrorFields(errors);
 
     if (errors.length === 0) {
       axios
         .post(
-          "http://localhost:3000/nexusEmployee/addInsuEmployee",
+          "http://localhost:3000/manager/createuser",
           {
             first_name: firstName,
             second_name: secondName,
@@ -55,7 +47,6 @@ export default function AddInsuranceCompUser(props) {
             national_id: nationalID,
             email: email,
             phone_number: phoneNum,
-            company_name: company_name,
           },
           {
             headers: { SESSION_ID: getSessionId() },
@@ -70,33 +61,18 @@ export default function AddInsuranceCompUser(props) {
           setNationalID("");
           setEmail("");
           setPhoneNum("");
-          setcompany_name("");
-          enqueueSnackbar("User Added to " + company_name, {
+          enqueueSnackbar("User " + firstName + "is added", {
             variant: "success",
           });
         })
         .catch((error) => {
           console.error("Error adding user:", error);
-          enqueueSnackbar("Failed to Add User to " + company_name, {
+          enqueueSnackbar("Failed to Add User ", {
             variant: "error",
           });
         });
     }
   };
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/nexusEmployee/insuranceCompanies", {
-        headers: { SESSION_ID: getSessionId() },
-      })
-      .then(
-        (res) => {
-          setOptions(res.data);
-          console.log("get is success");
-        },
-        (err) => {}
-      );
-  }, []);
 
   return (
     <Stack
@@ -109,30 +85,8 @@ export default function AddInsuranceCompUser(props) {
       p={2}
     >
       <Typography variant="h3" color={"primary"}>
-        Add insurance company employee
+        Add Employee
       </Typography>
-      <Autocomplete
-        value={company_name}
-        onChange={(event, newValue) => {
-          setcompany_name(newValue);
-        }}
-        sx={{ width: 350 }}
-        options={options}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Select Target Insurance Compay"
-            variant="outlined"
-            error={errorFields.includes("company_name")}
-            helperText={
-              errorFields.includes("company_name")
-                ? "Company name is required"
-                : ""
-            }
-            required
-          />
-        )}
-      />
       <Stack
         width="100%"
         flexDirection="row"
@@ -160,7 +114,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
         <TextField
@@ -182,7 +135,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
         <TextField
@@ -204,7 +156,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
       </Stack>
@@ -213,7 +164,7 @@ export default function AddInsuranceCompUser(props) {
         flexDirection="row"
         flexWrap={"wrap"}
         alignItems={"flex-start"}
-        justifyContent={"flex-start"}
+        justifyContent={"center"}
         gap={2}
       >
         <TextField
@@ -235,7 +186,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
         <TextField
@@ -256,7 +206,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
         <TextField
@@ -278,10 +227,31 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
+          sx={{ flexGrow: 1 }}
+        />
+        <TextField
+          id="phone_num"
+          label="Amount he pays for insurance"
+          onChange={(e) => {
+            setPhoneNum(e.target.value);
+          }}
+          value={phoneNum}
+          error={
+            errorFields.includes("phone_num_reg") ||
+            errorFields.includes("phone_num")
+          }
+          helperText={
+            errorFields.includes("phone_num")
+              ? "Phone number is required"
+              : errorFields.includes("phone_num_reg")
+              ? "Invalid phone number"
+              : ""
+          }
+          required
           sx={{ flexGrow: 1 }}
         />
       </Stack>
+
       <Button sx={{ width: 100 }} variant="contained" onClick={handleAdd}>
         ADD
       </Button>

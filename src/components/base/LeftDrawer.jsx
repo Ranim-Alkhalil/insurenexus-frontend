@@ -26,10 +26,30 @@ export default function LeftDrawer(props) {
               typography: "h5",
               fontWeight: "regular",
             }}
+            onClick={() => {
+              navigate("/home");
+            }}
           >
             Home
           </ListItemButton>
         </ListItem>
+        <ListItem>
+          <ListItemButton
+            sx={{
+              color: "#0f3554",
+              fontSize: "200",
+              height: 50,
+              typography: "h5",
+              fontWeight: "regular",
+            }}
+            onClick={() => {
+              navigate("/companiesPage");
+            }}
+          >
+            Insurance companies
+          </ListItemButton>
+        </ListItem>
+
         <ListItem>
           <ListItemButton
             sx={{
@@ -52,6 +72,9 @@ export default function LeftDrawer(props) {
                   break;
                 case 4:
                   navigate("/profile/nexus-employee");
+                  break;
+                case 5:
+                  navigate("/profile/admin");
                   break;
               }
             }}
@@ -82,10 +105,29 @@ export default function LeftDrawer(props) {
                 case 4:
                   navigate("/tools/nexus-employee");
                   break;
+                case 5:
+                  navigate("/tools/admin");
+                  break;
               }
             }}
           >
             Tools
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton
+            sx={{
+              color: "#0f3554",
+              fontSize: "200",
+              height: 50,
+              typography: "h5",
+              fontWeight: "regular",
+            }}
+            onClick={() => {
+              navigate("/aboutUs");
+            }}
+          >
+            About us
           </ListItemButton>
         </ListItem>
       </List>

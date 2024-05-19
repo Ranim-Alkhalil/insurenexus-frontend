@@ -24,7 +24,7 @@ const profile = createTheme({
     },
   },
 });
-export default function InsuEmpInfo(props) {
+export default function AdminInfo(props) {
   const { user, setUser } = useContext(GlobalStates);
 
   return (

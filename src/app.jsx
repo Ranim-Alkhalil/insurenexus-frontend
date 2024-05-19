@@ -20,6 +20,12 @@ import NormalUserTools from "./components/pages/tools/normal/Base";
 import NexusEmployeeTools from "./components/pages/tools/nexusEmployee/Base";
 import InsuranceEmployeeTools from "./components/pages/tools/insuranceEmployee/Base";
 import CompanyEmployeeTools from "./components/pages/tools/companyEmployee/Base";
+import Header from "./components/pages/companys select/companies_page";
+import About from "./components/pages/about_us/About";
+import Company from "./components/pages/company/Company";
+import Home_page from "./components/pages/home_page_/Home_page";
+import AdminProfile from "./components/pages/profile/Admin/Base";
+import AdminTools from "./components/pages/tools/Admin/Base";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +52,10 @@ const router = createBrowserRouter([
             path: "nexus-employee",
             element: <NexusEmployeeProfile />,
           },
+          {
+            path: "admin",
+            element: <AdminProfile />,
+          },
         ],
       },
       {
@@ -68,10 +78,17 @@ const router = createBrowserRouter([
             path: "nexus-employee",
             element: <NexusEmployeeTools />,
           },
+          {
+            path: "admin",
+            element: <AdminTools />,
+          },
         ],
       },
       { path: "signin", element: <SignIn /> },
-      { path: "home", element: <Home /> },
+      { path: "home", element: <Home_page /> },
+      { path: "company/:companyName", element: <Company /> },
+      { path: "companiesPage", element: <Header /> },
+      { path: "aboutUs", element: <About /> },
     ],
   },
 ]);

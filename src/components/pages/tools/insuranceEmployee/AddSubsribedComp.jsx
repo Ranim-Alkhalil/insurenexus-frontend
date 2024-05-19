@@ -79,7 +79,7 @@ export default function AddSubscribedComp(props) {
       <TextField
         sx={{ width: "350px" }}
         id="company_name"
-        label="company_name"
+        label="Company Name"
         onChange={(e) => {
           setCompanyName(e.target.value);
         }}
@@ -142,7 +142,7 @@ export default function AddSubscribedComp(props) {
       <TextField
         sx={{ width: "350px" }}
         id="address"
-        label="address"
+        label="Address"
         onChange={(e) => {
           setAddress(e.target.value);
         }}

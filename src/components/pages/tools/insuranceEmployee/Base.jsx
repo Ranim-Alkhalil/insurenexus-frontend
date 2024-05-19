@@ -5,6 +5,8 @@ import CreateEmployee from "./CreateEmployee";
 import CreateUser from "./CreateUser";
 import AddServices from "./Services";
 import { Box, Tab, Tabs } from "@mui/material";
+import AddFacility from "./AddFacility";
+import AddInfo from "./AddInfo";
 
 export default function InsuranceEmployeeTools(props) {
   const [selectedPanel, setSelectedPanel] = useState("Addnormaluser");
@@ -12,6 +14,13 @@ export default function InsuranceEmployeeTools(props) {
     <>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs>
+          <Tab
+            label="Add info"
+            sx={{ fontSize: 20, color: "#0f3554" }}
+            onClick={() => {
+              setSelectedPanel("AddInfo");
+            }}
+          />
           <Tab
             label="Add client"
             sx={{ fontSize: 20, color: "#0f3554" }}
@@ -48,14 +57,22 @@ export default function InsuranceEmployeeTools(props) {
               setSelectedPanel("Addservices");
             }}
           />
+          <Tab
+            label="Add facility"
+            sx={{ fontSize: 20, color: "#0f3554" }}
+            onClick={() => {
+              setSelectedPanel("AddFacility");
+            }}
+          />
         </Tabs>
       </Box>
-
+      {selectedPanel === "AddInfo" && <AddInfo />}
       {selectedPanel === "Addservices" && <AddServices />}
       {selectedPanel === "Addcompanymanager" && <CreateEmployee />}
       {selectedPanel === "Addnormaluser" && <CreateUser />}
       {selectedPanel === "Addcompany" && <AddSubscribedComp />}
       {selectedPanel === "Addsubscription" && <AddSubscription />}
+      {selectedPanel === "AddFacility" && <AddFacility />}
     </>
   );
 }

@@ -100,7 +100,10 @@ export default function BaseComponent(props) {
               <Typography>Loading, please wait...</Typography>
             </Stack>
           ) : (
-            <Outlet />
+            <>
+              <Outlet />
+              {/* <Footer /> */}
+            </>
           )}
         </Stack>
       </ThemeProvider>

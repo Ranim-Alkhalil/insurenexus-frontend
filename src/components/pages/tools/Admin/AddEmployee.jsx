@@ -11,7 +11,7 @@ import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { getSessionId } from "../../../../api/SessionIdUtils";
 
-export default function AddInsuranceCompUser(props) {
+export default function AddInsuNexus(props) {
   const [company_name, setcompany_name] = useState(null);
   const [options, setOptions] = useState([]);
   const [firstName, setFirstName] = useState("");
@@ -40,14 +40,14 @@ export default function AddInsuranceCompUser(props) {
     if (!nationalID.trim()) errors.push("national_id");
     if (!email.trim()) errors.push("email");
     if (!phoneNum.trim()) errors.push("phone_num");
-    if (!company_name) errors.push("company_name");
+
     console.log(errors);
     setErrorFields(errors);
 
     if (errors.length === 0) {
       axios
         .post(
-          "http://localhost:3000/nexusEmployee/addInsuEmployee",
+          "http://localhost:3000/admin/addNexusEmp",
           {
             first_name: firstName,
             second_name: secondName,
@@ -55,7 +55,6 @@ export default function AddInsuranceCompUser(props) {
             national_id: nationalID,
             email: email,
             phone_number: phoneNum,
-            company_name: company_name,
           },
           {
             headers: { SESSION_ID: getSessionId() },
@@ -70,7 +69,7 @@ export default function AddInsuranceCompUser(props) {
           setNationalID("");
           setEmail("");
           setPhoneNum("");
-          setcompany_name("");
+
           enqueueSnackbar("User Added to " + company_name, {
             variant: "success",
           });
@@ -84,20 +83,6 @@ export default function AddInsuranceCompUser(props) {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/nexusEmployee/insuranceCompanies", {
-        headers: { SESSION_ID: getSessionId() },
-      })
-      .then(
-        (res) => {
-          setOptions(res.data);
-          console.log("get is success");
-        },
-        (err) => {}
-      );
-  }, []);
-
   return (
     <Stack
       flexDirection={"column"}
@@ -109,30 +94,9 @@ export default function AddInsuranceCompUser(props) {
       p={2}
     >
       <Typography variant="h3" color={"primary"}>
-        Add insurance company employee
+        Add Employee
       </Typography>
-      <Autocomplete
-        value={company_name}
-        onChange={(event, newValue) => {
-          setcompany_name(newValue);
-        }}
-        sx={{ width: 350 }}
-        options={options}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Select Target Insurance Compay"
-            variant="outlined"
-            error={errorFields.includes("company_name")}
-            helperText={
-              errorFields.includes("company_name")
-                ? "Company name is required"
-                : ""
-            }
-            required
-          />
-        )}
-      />
+
       <Stack
         width="100%"
         flexDirection="row"
@@ -160,7 +124,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
         <TextField
@@ -182,7 +145,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
         <TextField
@@ -204,7 +166,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
       </Stack>
@@ -235,7 +196,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
         <TextField
@@ -256,7 +216,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
         <TextField
@@ -278,7 +237,6 @@ export default function AddInsuranceCompUser(props) {
               : ""
           }
           required
-          disabled={company_name == null}
           sx={{ flexGrow: 1 }}
         />
       </Stack>

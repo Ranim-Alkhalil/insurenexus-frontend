@@ -1,166 +1,227 @@
-import React, { useState, useEffect } from "react";
-import logo from "./image/logo.jpeg";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Paper,
+  Rating,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 import cover from "./image/cover.jpg";
-import company from "./image/company.jpg";
-import "./design/_company.css";
+import { useParams } from "react-router-dom";
 
+import styled from "@emotion/styled";
+import { getSessionId } from "../../../api/SessionIdUtils";
 export default function Company(props) {
-  const [companyInfo, setCompanyInfo] = useState(null);
-
+  const [info, setInfo] = useState([]);
+  const [rate, setRate] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [insurances, setInsurances] = useState([]);
+  const { companyName } = useParams();
   useEffect(() => {
-    fetchCompanyInfo("Total Insurance"); //  company name
+    axios
+      .get("http://localhost:3000/user/companyInfo", {
+        headers: { SESSION_ID: getSessionId() },
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setInfo(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
-
-  const fetchCompanyInfo = async (companyName) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3004/company-info/${companyName}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setCompanyInfo(data);
-      } else {
-        console.error(
-          "Failed to fetch company information:",
-          response.statusText
-        );
-      }
-    } catch (error) {
-      console.error("Error fetching company information:", error);
-    }
-  };
-
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compRate", {
+        headers: { SESSION_ID: getSessionId() },
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setRate(res.data.rating);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compComment", {
+        headers: { SESSION_ID: getSessionId() },
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setComments(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compInsu", {
+        headers: { SESSION_ID: getSessionId() },
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setInsurances(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  const StyledBox = styled(Box)({
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Adding a shadow
+    padding: "20px", // Adding padding for spacing
+    borderRadius: "8px", // Adding border radius for rounded corners
+    backgroundColor: "#fff", // Setting background color
+  });
   return (
-    <>
-      <html lang="en">
-        <head>
-          <meta charSet="UTF-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <title>company_page</title>
+    <Stack
+      flexDirection={"column"}
+      height={"100%"}
+      width="100%"
+      gap={3}
+      justifyContent={"flex-start"}
+      alignItems={"flex-start"}
+      sx={{ overflowX: "hidden" }} // Set overflowX to hidden
+    >
+      <img src={cover} />
 
-          {/* for icons*/}
-          <link
-            href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
-            rel="stylesheet"
-          />
-          {/* FOR BOOTSTRAP*/}
-          <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-            crossOrigin="anonymous"
-          />
-        </head>
+      <Stack direction="row" pl={2}>
+        <Typography variant="h3" color="primary">
+          {companyName}
+        </Typography>
+        <Rating value={rate} precision={0.5} readOnly sx={{ pt: 2, pl: 2 }} />
+      </Stack>
+      <Box pl={2}>
+        <TableContainer
+          style={{ width: "100%", height: "auto", overflowX: "auto" }}
+        >
+          <Table style={{ width: "auto" }}>
+            <TableBody>
+              <TableRow>
+                <TableCell>Description:</TableCell>
+                <TableCell>{info.description}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Phone Number:</TableCell>
+                <TableCell>{info.phone_number}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Email:</TableCell>
+                <TableCell>{info.email}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Address:</TableCell>
+                <TableCell>{info.address}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Mail:</TableCell>
+                <TableCell>{info.mail}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Fax:</TableCell>
+                <TableCell>{info.fax}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
 
-        <body>
-          <nav className="navbar bg-body-tertiary">
-            <div className="container-fluid">
-              <a className="navbar-brand" href="#">
-                <img
-                  src={logo}
-                  alt="Logo"
-                  width="50"
-                  height="50"
-                  className="image-logo"
-                />
-                <span style={{ color: "white" }}>InsureNexus</span>
-              </a>
-            </div>
-          </nav>
+      <Typography variant="h4" color="primary" pt={5} pl={2}>
+        Types of Insurances
+      </Typography>
+      <Stack direction="row" spacing={2} pl={2} flexWrap={"wrap"}>
+        {insurances.map((insurance, index) => (
+          <Box
+            key={index}
+            width="200px"
+            height="150px"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Paper
+              elevation={3}
+              style={{ padding: "10px", width: "100%", height: "100%" }}
+            >
+              <Stack direction="column" spacing={5} alignItems="center" pt={3}>
+                <Typography variant="h5" color="primary">
+                  {insurance}
+                </Typography>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  href={insurance.pdfLink}
+                  target="_blank"
+                >
+                  PDF
+                </Button>
+              </Stack>
+            </Paper>
+          </Box>
+        ))}
+      </Stack>
 
-          <div className="page">
-            <div className="cover">
-              <img src={cover} alt="" />
-            </div>
-            <div className="hoeizntal"></div>
-            <div className="compay_image">
-              {companyInfo ? (
-                <img src={companyInfo.logo} alt="Company Logo" />
-              ) : (
-                <p>Loading logo...</p>
-              )}
-
-              <caption>
-                <div className="c_name">
-                  <span>{companyInfo ? companyInfo.name : "Company Name"}</span>
-
-                  <div className="box_info">
-                    {companyInfo ? (
-                      <>
-                        <ul>
-                          <li>
-                            <strong>Description:</strong>{" "}
-                            {companyInfo.description}
-                          </li>
-                          <li>
-                            <strong>Phone Number:</strong>{" "}
-                            {companyInfo.phone_number}
-                          </li>
-                          <li>
-                            <strong>Email:</strong> {companyInfo.email}
-                          </li>
-                          <li>
-                            <strong>Address:</strong> {companyInfo.address}
-                          </li>
-                          <li>
-                            <strong>Fax:</strong> {companyInfo.fax}
-                          </li>
-                          <li>
-                            <strong>Mail:</strong> {companyInfo.mail}
-                          </li>
-                        </ul>
-                      </>
-                    ) : (
-                      "Loading..."
-                    )}
-                  </div>
-                </div>
-              </caption>
-            </div>
-            <div className="cards">
-              <div className="card mb-3" style={{ maxWidth: "540px" }}>
-                <div className="row g-0">
-                  <div className="col-md-4">
-                    <i className="ri-hospital-line"></i>
-                  </div>
-                  <div className="col-md-8">
-                    <div className="card-body">
-                      <h5 className="card-title">Health</h5>
-                      {/*  service name */}
-                      {companyInfo ? (
-                        <p>{companyInfo.service_name}</p>
-                      ) : (
-                        <p>Loading service name...</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="card mb-3" style={{ maxWidth: "540px" }}>
-                <div className="row g-0">
-                  <div className="col-md-4">
-                    <i className="ri-car-line"></i>
-                  </div>
-                  <div className="col-md-8">
-                    <div className="card-body">
-                      <h5 className="card-title">Cars</h5>
-                      {/* code for my content */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"
-          ></script>
-        </body>
-      </html>
-    </>
+      <Stack
+        flexDirection={"column"}
+        height={"100%"}
+        width="90%"
+        gap={2}
+        justifyContent={"center"}
+        alignItems={"center"}
+        pl={2}
+      >
+        <Typography variant="h4" color="primary" mt={10}>
+          Users Reviews
+        </Typography>
+        {comments.length > 0 ? (
+          comments.map((comment, index) => (
+            <Paper
+              key={index}
+              elevation={3}
+              style={{
+                padding: "10px",
+                marginTop: "10px",
+                marginBottom: "20px",
+                width: "1000px",
+                height: "auto",
+                border: "1px solid #CBB26B",
+              }}
+            >
+              <Typography variant="h6" color={"primary"}>
+                {comment}
+              </Typography>
+            </Paper>
+          ))
+        ) : (
+          <Typography pb={5}>No comments available.</Typography>
+        )}
+      </Stack>
+    </Stack>
   );
 }

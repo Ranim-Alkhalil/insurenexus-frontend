@@ -10,11 +10,11 @@ import { useEffect, useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
 import { getSessionId } from "../../../../api/SessionIdUtils";
-export default function Insurances(props) {
+export default function InsurancesEmp(props) {
   const [insurances, setInsurances] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/user/insurances", {
+      .get("http://localhost:3000/manager/insurances", {
         headers: { SESSION_ID: getSessionId() },
       })
       .then(

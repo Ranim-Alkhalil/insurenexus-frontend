@@ -1,34 +1,30 @@
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { getSessionId } from "../../../../api/SessionIdUtils";
 import {
   Autocomplete,
   Button,
+  Card,
+  CardContent,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import InputText from "../../createUser/InputText";
-import axios from "axios";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import { getSessionId } from "../../../../api/SessionIdUtils";
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import { enqueueSnackbar } from "notistack";
+
 export default function AddServices(props) {
-  const [parent, setParent] = useState(null);
-  const [newService, setNewService] = useState(null);
-  const [child, setChild] = useState(null);
   const [options, setOptions] = useState([]);
-  const [option, setOption] = useState([]);
-  const [children, setChildren] = useState([]);
+  const [services, setServices] = useState([]);
+  const [service, setService] = useState(null);
+  const [maxWidth, setMaxWidth] = useState(0);
+  const [maxHeight, setMaxHeight] = useState(0);
+
+  const cardRefs = useRef([]);
+
+  // Fetch company insurances on component mount
   useEffect(() => {
     axios
-      .get("http://localhost:3000/insuranceEmployee/companyParent", {
+      .get("http://localhost:3000/insuranceEmployee/compInsurances", {
         headers: { SESSION_ID: getSessionId() },
       })
       .then(
@@ -36,47 +32,71 @@ export default function AddServices(props) {
           setOptions(res.data);
           console.log("get is success");
         },
-        (err) => {}
+        (err) => {
+          console.error("Failed to fetch insurances", err);
+        }
       );
   }, []);
+
+  // Fetch all available services on component mount
   useEffect(() => {
     axios
-      .get("http://localhost:3000/insuranceEmployee/Parent", {
+      .get("http://localhost:3000/insuranceEmployee/Insurances", {
         headers: { SESSION_ID: getSessionId() },
       })
       .then(
         (res) => {
-          setOption(res.data);
+          setServices(res.data);
           console.log("get is success");
         },
-        (err) => {}
+        (err) => {
+          console.error("Failed to fetch insurances", err);
+        }
       );
   }, []);
-  useEffect(() => {
+
+  // Handle adding a new insurance service
+  const handleAdd = () => {
     axios
-      .get("http://localhost:3000/insuranceEmployee/child", {
-        headers: { SESSION_ID: getSessionId() },
-        params: {
-          param1: parent,
-        },
+      .post(
+        "http://localhost:3000/insuranceEmployee/addInsurance",
+        { insurance: service },
+        {
+          headers: { SESSION_ID: getSessionId() },
+        }
+      )
+      .then((response) => {
+        console.log("Service added successfully:", response.data);
+        // Update the options state with the new service
+        setOptions((prevOptions) => [...prevOptions, service]);
+        setService(null); // Clear the selected service
+        enqueueSnackbar("Service added successfully", {
+          variant: "success",
+        });
       })
-      .then(
-        (res) => {
-          setChildren(res.data);
-          console.log("get is success");
-        },
-        (err) => {}
-      );
-  }, [parent]);
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
+      .catch((error) => {
+        console.error("Error adding service:", error);
+        enqueueSnackbar("Failed to add service", {
+          variant: "error",
+        });
+      });
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // Filter the services to exclude the ones already in options
+  const availableServices = services.filter(
+    (service) => !options.includes(service)
+  );
+
+  // Update card dimensions based on content
+  useEffect(() => {
+    if (cardRefs.current.length > 0) {
+      const widths = cardRefs.current.map((ref) => ref?.offsetWidth || 0);
+      const heights = cardRefs.current.map((ref) => ref?.offsetHeight || 0);
+      setMaxWidth(Math.max(...widths));
+      setMaxHeight(Math.max(...heights));
+    }
+  }, [options]);
+
   return (
     <Stack
       flexDirection={"column"}
@@ -90,80 +110,48 @@ export default function AddServices(props) {
       <Typography variant="h3" color={"primary"}>
         Add Service
       </Typography>
-      <Stack flexDirection={"row"}>
-        <Autocomplete
-          value={parent}
-          onChange={(event, newValue) => {
-            setParent(newValue);
-          }}
-          sx={{ width: 350 }}
-          options={options}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Select Target Insurance Compay"
-              variant="outlined"
-              required
-            />
-          )}
-        />
-        <AddCircleIcon
-          fontSize="large"
-          sx={{ color: "#CBB26B", mt: 1, ml: 2 }}
-          onClick={handleClickOpen}
-        />
-      </Stack>
-
       <Autocomplete
-        disabled={parent == null}
-        value={child}
+        value={service}
         onChange={(event, newValue) => {
-          setChild(newValue);
+          setService(newValue);
         }}
         sx={{ width: 350 }}
-        options={children}
+        options={availableServices}
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Select Target "
+            label="Select Target Insurance to Add"
             variant="outlined"
             required
           />
         )}
       />
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Add New Service"}</DialogTitle>
-        <DialogContent>
-          <Autocomplete
-            value={newService}
-            onChange={(event, newValue) => {
-              setNewService(newValue);
-            }}
-            sx={{ width: 350, p: 2 }}
-            options={option}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Select Target "
-                variant="outlined"
-                required
-              />
-            )}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Add</Button>
-        </DialogActions>
-      </Dialog>
       <Button sx={{ width: 100 }} variant="contained" onClick={handleAdd}>
         ADD
       </Button>
+      <Typography variant="h6" color={"primary"}>
+        Your Company Services
+      </Typography>
+      <Stack flexDirection={"row"} flexWrap={"wrap"} gap={2}>
+        {options.map((insurance, index) => (
+          <Card
+            key={index}
+            ref={(el) => (cardRefs.current[index] = el)}
+            sx={{
+              width: maxWidth || "auto",
+              height: maxHeight || "auto",
+              border: "1px solid",
+              borderColor: "#CBB26B",
+            }}
+          >
+            <CardContent>
+              <Typography variant="body1" color={"primary"}>
+                {insurance}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Stack>
     </Stack>
   );
 }

@@ -1,25 +1,26 @@
 import { useState } from "react";
 
 import { Box, Rating, Tab, Tabs } from "@mui/material";
-import Rate from "./Rating";
 
-export default function NormalUserTools(props) {
-  const [selectedPanel, setSelectedPanel] = useState("Rate");
+import AddInsuNexus from "./AddEmployee";
+
+export default function AdminTools(props) {
+  const [selectedPanel, setSelectedPanel] = useState("add");
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs>
           <Tab
-            label="Rate"
+            label="Add Employee"
             sx={{ fontSize: 20, color: "#0f3554" }}
             onClick={() => {
-              setSelectedPanel("Rate");
+              setSelectedPanel("add");
             }}
           />
         </Tabs>
       </Box>
 
-      {selectedPanel === "Rate" && <Rate />}
+      {selectedPanel === "add" && <AddInsuNexus />}
     </>
   );
 }

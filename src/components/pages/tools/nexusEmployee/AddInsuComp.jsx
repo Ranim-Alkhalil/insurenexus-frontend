@@ -8,7 +8,9 @@ import {
 import InputText from "../../createUser/InputText";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import { DropzoneArea } from "@mui/lab";
+import { enqueueSnackbar } from "notistack";
+import { getSessionId } from "../../../../api/SessionIdUtils";
+
 export default function AddInsuComp(props) {
   const [company_name, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,36 +18,69 @@ export default function AddInsuComp(props) {
   const [address, setAddress] = useState("");
   const [mail, setMail] = useState("");
   const [fax, setFax] = useState("");
-  const [description, setDescription] = useState("");
-  const [logo, setLogo] = useState("");
-  function handleAdd() {
-    axios
-      .post("http://localhost:3000/user/addNewInsuEmployee", {
-        company_name: company_name,
-        email: email,
-        phone_number: phone_number,
-        address: address,
-        mail: mail,
-        fax: fax,
-        description: description,
-        pdf: pdf,
-        logo: logo,
-      })
-      .then((response) => {
-        console.log("User added successfully:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error adding user:", error);
-      });
+
+  // const [img, setImg] = useState(null);
+  // const [pdf, setPdf] = useState(null);
+
+  function fileToBase64(file) {
+    const temporaryFileReader = new FileReader();
+
+    return new Promise((resolve, reject) => {
+      temporaryFileReader.onerror = () => {
+        temporaryFileReader.abort();
+        reject(new DOMException("Problem parsing input file."));
+      };
+
+      temporaryFileReader.onload = () => {
+        resolve(temporaryFileReader.result);
+      };
+      temporaryFileReader.readAsDataURL(file);
+    });
   }
 
-  const handleDropzoneChange = (newFiles) => {
-    if (newFiles.length > 0) {
-      setLogo(newFiles[0]);
-    } else {
-      setLogo(null);
-    }
-  };
+  // function onPdfSelect(event) {
+  //   setPdf(event.target.files[0]);
+  // }
+  function onImgSelect(event) {
+    setImg(event.target.files[0]);
+  }
+  function handleAdd() {
+    // fileToBase64(pdf).then((pdfResult) => {
+    // fileToBase64(img).then((imgResult) => {
+    axios
+      .post(
+        "http://localhost:3000/nexusEmployee/addInsuComp",
+        {
+          company_name: company_name,
+          email: email,
+          phone_number: phone_number,
+          address: address,
+          mail: mail,
+          fax: fax,
+          // pdf: pdfResult,
+          // logo: imgResult,
+        },
+        {
+          headers: { SESSION_ID: getSessionId() },
+        }
+      )
+      .then((response) => {
+        console.log("Company added successfully:", response.data);
+        enqueueSnackbar("Company added successfully", {
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        console.error("Error adding company:", error);
+        enqueueSnackbar("Failed to Add Company " + company_name, {
+          variant: "error",
+        });
+      });
+    // });
+    // }
+    // );
+  }
+
   return (
     <Stack
       flexDirection={"column"}
@@ -62,7 +97,7 @@ export default function AddInsuComp(props) {
 
       <InputText
         id="company_name"
-        label="Company_name"
+        label="Company Name"
         onChange={(e) => {
           setCompanyName(e.target.value);
         }}
@@ -70,7 +105,7 @@ export default function AddInsuComp(props) {
       />
       <InputText
         id="email"
-        label="email"
+        label="Email"
         onChange={(e) => {
           setEmail(e.target.value);
         }}
@@ -78,7 +113,7 @@ export default function AddInsuComp(props) {
       />
       <InputText
         id="phone_number"
-        label="phone_number"
+        label="Phone Number"
         onChange={(e) => {
           setPhoneNum(e.target.value);
         }}
@@ -86,7 +121,7 @@ export default function AddInsuComp(props) {
       />
       <InputText
         id="address"
-        label="address"
+        label="Address"
         onChange={(e) => {
           setAddress(e.target.value);
         }}
@@ -94,7 +129,7 @@ export default function AddInsuComp(props) {
       />
       <InputText
         id="mail"
-        label="mail"
+        label="Mail"
         onChange={(e) => {
           setMail(e.target.value);
         }}
@@ -102,28 +137,53 @@ export default function AddInsuComp(props) {
       />
       <InputText
         id="fax"
-        label="fax"
+        label="Fax"
         onChange={(e) => {
           setFax(e.target.value);
         }}
         value={fax}
       />
-      <InputText
-        id="description"
-        label="description"
-        onChange={(e) => {
-          setDescription(e.target.value);
-        }}
-        value={description}
+
+      {/* pdf */}
+      {/* <input
+        id={"pdf-manual-input"}
+        type="file"
+        onChange={onPdfSelect}
+        style={{ display: "none" }}
       />
-      <InputText id="pdf" label="pdf" />
-      <InputText id="logo" label="logo" />
-      {/* <DropzoneArea
-        acceptedFiles={["image/*"]}
-        onChange={handleDropzoneChange}
-        filesLimit={1} // Limiting to one file
-        maxFileSize={10485760} // 10 MB in bytes
-      /> */}
+      <Typography>
+        {pdf != null
+          ? "Selected File : " + pdf.name
+          : "Please Select Brochoure File!"}
+      </Typography>
+
+      <Button
+        variant="contained"
+        onClick={() => {
+          document.getElementById("pdf-manual-input").click();
+        }}
+      >
+        Select Brochoure PDF
+      </Button> */}
+      {/* image */}
+      {/* <input
+        id={"image-input"}
+        type="file"
+        onChange={onImgSelect}
+        style={{ display: "none" }}
+      />
+      <Typography>
+        {img != null ? "Selected File : " + img.name : "Please Select logo"}
+      </Typography>
+      <Button
+        variant="contained"
+        onClick={() => {
+          document.getElementById("image-input").click();
+        }}
+      >
+        Select logo
+      </Button> */}
+
       <Button sx={{ width: 100 }} variant="contained" onClick={handleAdd}>
         ADD
       </Button>

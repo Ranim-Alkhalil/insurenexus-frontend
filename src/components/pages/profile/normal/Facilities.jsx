@@ -76,12 +76,6 @@ export default function Facilities(props) {
         })}*/}
         </ButtonGroup>
         {/* search or filter */}
-        <TextField
-          id="outlined-search"
-          label="Search field"
-          type="search"
-          sx={{ mt: 3 }}
-        />
       </Stack>
       <TableContainer sx={{ width: "100%", mt: 5 }}>
         {/*sticky not working */}

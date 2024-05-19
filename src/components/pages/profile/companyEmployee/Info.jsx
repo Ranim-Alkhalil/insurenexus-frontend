@@ -1,4 +1,10 @@
-import { Stack, ThemeProvider, Typography, createTheme } from "@mui/material";
+import {
+  Grid,
+  Stack,
+  ThemeProvider,
+  Typography,
+  createTheme,
+} from "@mui/material";
 import DisplayBoxWithBorder from "../normal/components/DisplayBoxWithBorder";
 import { getSessionId } from "../../../../api/SessionIdUtils";
 import { useContext, useEffect, useState } from "react";
@@ -34,23 +40,23 @@ export default function ManagerInfo(props) {
         <Typography variant="h3" color={"#0f3554"}>
           Personal information
         </Typography>
-        <Stack
-          flexDirection={"row"}
-          height={"100%"}
-          width="100%"
-          gap={3}
-          justifyContent={"flex-start"}
-          alignItems={"flex-start"}
-          p={2}
-        >
-          <DisplayBoxWithBorder
-            title="Name"
-            value={user.firstName + " " + user.lastName}
-          />
-          <DisplayBoxWithBorder title="Email" value={user.email} />
-          <DisplayBoxWithBorder title="National ID" value={user.nationalId} />
-          <DisplayBoxWithBorder title="Phone Number" value={user.phoneNum} />
-        </Stack>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} md={3}>
+            <DisplayBoxWithBorder
+              title="Name"
+              value={user.firstName + " " + user.lastName}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <DisplayBoxWithBorder title="Email" value={user.email} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <DisplayBoxWithBorder title="National ID" value={user.nationalId} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <DisplayBoxWithBorder title="Phone Number" value={user.phoneNum} />
+          </Grid>
+        </Grid>
       </Stack>
     </ThemeProvider>
   );
