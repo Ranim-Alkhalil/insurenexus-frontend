@@ -34,13 +34,13 @@ export default function Header() {
           match for your needs{" "}
         </p>
 
-        <div className="companies_section">
+        <div className="companies_section ">
           {options.length === 0 ? (
             <p className="companies_name">Loading...</p>
           ) : (
-            <div className="grid-container">
+            <div className=" row justify-content-center gap-5">
               {options.map((company, index) => (
-                <div key={index} className="companies_info">
+                <div key={index} className="companies_info col-3">
                   <p className="companies_name">{company}</p>
                   <button type="button" className="btn customButtonColor">
                     go to company

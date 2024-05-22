@@ -9,8 +9,8 @@ import "./home_page.css";
 
 export default function Home_page() {
   return (
-    <div className=" home-container">
-      <div className=" p-md-5 section1 mb-4   ">
+    <div className=" home-container ">
+      <div className=" p-md-5 section1 mb-4   Home_page d-flex  justify-content-center ">
         <div className="row align-items-center">
           <div className="col-lg-6 col-md-12">
             <h3 className="display-4 h1style_home fst-italic">
@@ -34,7 +34,7 @@ export default function Home_page() {
               </svg>
             </button>
           </div>
-          <div className="col-4">
+          <div className="col-4 align-items-center  ps-5">
             <img src={p10} className=" img-fluid" />
           </div>
         </div>
@@ -199,7 +199,7 @@ export default function Home_page() {
         </div>
       </div>
 
-      <div className="rating d-flex">
+      <div className="rating d-flex justify-content-center">
         {" "}
         <div className="rating_section_p">
           <h4 className="rating_title">
@@ -211,8 +211,8 @@ export default function Home_page() {
             driving companies to improve and meet customer needs.
           </p>
         </div>
-        <div className="rating_img">
-          <img src={p12} className="p12 col-4 " />
+        <div className="rating_img col-4 ">
+          <img src={p12} className="p12 " />
         </div>
       </div>
     </div>

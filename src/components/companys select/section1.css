@@ -81,13 +81,7 @@ margin-bottom: 50px;
   text-align: center;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 20px;
-  justify-content: center;
-  margin:  50px; 
-}
+
 
 .companies_info {
   border: #d3d1d1 solid 2px;
