@@ -5,6 +5,7 @@ import AddInsuComp from "./AddInsuComp";
 import AddInsuranceCompUser from "./AddInsuranceCompUser";
 import AddFacility from "./AddFacility";
 import AddService from "./AddService";
+import CompanyService from "./CompanyService";
 
 export default function NexusEmployeeTools(props) {
   const [selectedPanel, setSelectedPanel] = useState("AddComp");
@@ -40,6 +41,13 @@ export default function NexusEmployeeTools(props) {
               setSelectedPanel("AddService");
             }}
           />
+          <Tab
+            label="Add service for a company"
+            sx={{ fontSize: 20, color: "#0f3554" }}
+            onClick={() => {
+              setSelectedPanel("CompanyService");
+            }}
+          />
         </Tabs>
       </Box>
 
@@ -47,6 +55,7 @@ export default function NexusEmployeeTools(props) {
       {selectedPanel === "AddEmp" && <AddInsuranceCompUser />}
       {selectedPanel === "AddFacility" && <AddFacility />}
       {selectedPanel === "AddService" && <AddService />}
+      {selectedPanel === "CompanyService" && <CompanyService />}
     </>
   );
 }

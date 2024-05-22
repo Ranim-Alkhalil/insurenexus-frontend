@@ -9,6 +9,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
+
+}
+
+p {
+    font-size: 27px;
 }
 
 .h2_Style {
@@ -40,16 +45,15 @@
 .container_p {
     font-family: "Yeseva One";
 
-    margin-top: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+
+
     text-align: left;
-    width: 650px;
+    width: 1200px;
     margin-top: 100px;
-    font-size: 20px;
+
     color: rgb(75, 73, 73);
-    margin-left: 350px;
+
 }
 
 .why_different {
@@ -57,10 +61,9 @@
     font-family: "Yeseva One";
     display: flex;
     flex-direction: column;
-    margin-left: 350px;
-    width: 650px;
+
+    width: 1200px;
     font-size: 20px;
-    padding: -10px;
 }
 
 .h3_style {
@@ -102,13 +105,13 @@
     margin-right: 30px;
     height: 500px;
     border: 2px solid rgb(212, 212, 212);
+
 }
 
 .wavyShape path {
     fill: url(#gradient);
 }
 
-/* cash */
 @keyframes wavy {
     0% {
         fill: rgba(15, 53, 84, 1);
@@ -122,6 +125,7 @@
         fill: #cbb26b;
     }
 }
+
 
 .wavyShape path {
     animation: wavy 4s linear infinite alternate;
@@ -140,15 +144,9 @@
 }
 
 .p_money_style {
-    font-size: 15px;
+    font-size: 23px;
     text-align: left;
     margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
-}
-
-/* our team*/
-.w_team {
-    width: 620px !important;
-    margin-top: 10px;
 }

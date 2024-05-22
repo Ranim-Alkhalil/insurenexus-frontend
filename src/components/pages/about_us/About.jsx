@@ -4,7 +4,7 @@ import pic1 from "./pic/pic1.jpg";
 
 export default function About() {
   return (
-    <div className="container-xxl">
+    <div className="d-flex flex-column align-items-center">
       <div className="container_about1">
         <div className="blue_div">
           <h2 className="h2_Style">About us</h2>

@@ -5,7 +5,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import InputText from "../../createUser/InputText";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
@@ -95,7 +95,7 @@ export default function AddInsuComp(props) {
         Add insurance company
       </Typography>
 
-      <InputText
+      <TextField
         id="company_name"
         label="Company Name"
         onChange={(e) => {
@@ -103,7 +103,7 @@ export default function AddInsuComp(props) {
         }}
         value={company_name}
       />
-      <InputText
+      <TextField
         id="email"
         label="Email"
         onChange={(e) => {
@@ -111,7 +111,7 @@ export default function AddInsuComp(props) {
         }}
         value={email}
       />
-      <InputText
+      <TextField
         id="phone_number"
         label="Phone Number"
         onChange={(e) => {
@@ -119,7 +119,7 @@ export default function AddInsuComp(props) {
         }}
         value={phone_number}
       />
-      <InputText
+      <TextField
         id="address"
         label="Address"
         onChange={(e) => {
@@ -127,7 +127,7 @@ export default function AddInsuComp(props) {
         }}
         value={address}
       />
-      <InputText
+      <TextField
         id="mail"
         label="Mail"
         onChange={(e) => {
@@ -135,7 +135,7 @@ export default function AddInsuComp(props) {
         }}
         value={mail}
       />
-      <InputText
+      <TextField
         id="fax"
         label="Fax"
         onChange={(e) => {

@@ -66,6 +66,14 @@ export default function Rate(props) {
       )
       .then((response) => {
         console.log("User added successfully:", response.data);
+        setValue1(null);
+        setValue2(null);
+        setValue3(null);
+        setValue4(null);
+        setValue5(null);
+        setValue6(null);
+        setValue7(null);
+        setComment(null);
         enqueueSnackbar("User Added to ", {
           variant: "success",
         });
@@ -79,25 +87,35 @@ export default function Rate(props) {
   };
   return (
     <>
-      <Typography variant="h5" color={"primary"}>
-        choose company
-      </Typography>
-      <Autocomplete
-        value={company_name}
-        onChange={(event, newValue) => {
-          setcompany_name(newValue);
-        }}
-        sx={{ width: 350 }}
-        options={options}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Select Target Insurance Compay"
-            variant="outlined"
-            required
-          />
-        )}
-      />
+      <Stack
+        flexDirection={"column"}
+        height={"100%"}
+        width="100%"
+        gap={0}
+        justifyContent={"flex-start"}
+        alignItems={"flex-start"}
+        p={3}
+      >
+        <Typography variant="h4" color={"primary"} mb={3}>
+          Choose company
+        </Typography>
+        <Autocomplete
+          value={company_name}
+          onChange={(event, newValue) => {
+            setcompany_name(newValue);
+          }}
+          sx={{ width: 350 }}
+          options={options}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Select Target Insurance Compay"
+              variant="outlined"
+              required
+            />
+          )}
+        />
+      </Stack>
       <Stack
         flexDirection={"row"}
         height={"100%"}
@@ -105,7 +123,6 @@ export default function Rate(props) {
         gap={0}
         justifyContent={"flex-start"}
         alignItems={"flex-start"}
-        p={2}
       >
         <Stack
           flexDirection={"column"}
@@ -114,10 +131,10 @@ export default function Rate(props) {
           gap={2}
           justifyContent={"flex-start"}
           alignItems={"flex-start"}
-          p={2}
+          p={3}
         >
-          <Typography variant="h3" color={"primary"}>
-            Rate
+          <Typography variant="h6" color={"primary"}>
+            Answer These Questions
           </Typography>
           <Typography>
             1. How would you rate the clarity of the insurance policy terms and
@@ -208,22 +225,26 @@ export default function Rate(props) {
           flexDirection={"column"}
           height={"100%"}
           width="50%"
-          gap={2}
+          gap={3}
           justifyContent={"flex-start"}
           alignItems={"flex-start"}
           p={2}
         >
-          <Typography variant="h3" color={"primary"}>
-            add comment
+          <Typography variant="h6" color={"primary"}>
+            Write your thoughts on the company
           </Typography>
+
           <TextField
             id="comment"
             label="comment"
             disabled={company_name == null}
+            multiline
+            rows={4}
+            value={comment}
             onChange={(e) => {
               setComment(e.target.value);
             }}
-            value={comment}
+            sx={{ width: "400px" }}
           />
           <Button sx={{ width: 100 }} variant="contained" onClick={handleAdd}>
             Submit

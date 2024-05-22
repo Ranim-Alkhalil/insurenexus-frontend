@@ -1,15 +1,9 @@
-import {
-  Box,
-  Divider,
-  Typography,
-  TextField,
-  Stack,
-  Grid,
-} from "@mui/material";
+import { Box, Divider, Typography, Stack, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
 import { getSessionId } from "../../../../api/SessionIdUtils";
+
 export default function Insurances(props) {
   const [insurances, setInsurances] = useState([]);
   useEffect(() => {
@@ -24,6 +18,7 @@ export default function Insurances(props) {
         (err) => {}
       );
   }, []);
+
   return (
     <Stack
       flexDirection={"column"}
@@ -45,40 +40,53 @@ export default function Insurances(props) {
               borderRadius={2}
               borderColor={"#CBB26B"}
               mt={5}
-              p={3}
-              width={500}
+              p={4}
+              sx={{
+                width: {
+                  xs: 1, // Full width on extra-small screens
+                  sm: 500, // 500px on small screens
+                  md: 550, // 550px on medium screens
+                },
+              }}
             >
-              <Box className="cardLabel">Type of insurance :</Box>
-              <Box className="cardContent">
+              <Box sx={{ fontSize: "1.4rem", mb: 1 }}>Type of insurance :</Box>
+              <Box sx={{ fontSize: "1.3rem", mb: 2 }}>
                 <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
                 {insurance.service_name}
               </Box>
               <Divider color={"#CBB26B"} />
 
-              <Box className="cardLabel">Company Name :</Box>
-              <Box className="cardContent">
+              <Box sx={{ fontSize: "1.4rem", mt: 2, mb: 1 }}>
+                Company Name :
+              </Box>
+              <Box sx={{ fontSize: "1.3rem", mb: 2 }}>
                 <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
                 {insurance.company_name}
               </Box>
 
               <Divider color={"#CBB26B"} />
-              <Box className="cardLabel" sx={{ padding: 0 }}>
+              <Box sx={{ fontSize: "1.4rem", mt: 2, mb: 1 }}>
                 Start Date :
-                <Typography className="cardLabel">(d-m-y)</Typography>
+                <Typography sx={{ fontSize: "1.2rem", display: "inline" }}>
+                  (d-m-y)
+                </Typography>
               </Box>
-              <Box className="cardContent">
+              <Box sx={{ fontSize: "1.3rem", mb: 2 }}>
                 <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
                 {insurance.subscription_started_at}
               </Box>
 
               <Divider color={"#CBB26B"} />
-              <Box className="cardLabel" sx={{ padding: 0 }}>
+              <Box sx={{ fontSize: "1.4rem", mt: 2, mb: 1 }}>
                 End Date :
-                <Typography noWrap className="cardLabel">
+                <Typography
+                  noWrap
+                  sx={{ fontSize: "1.2rem", display: "inline" }}
+                >
                   (d-m-y)
                 </Typography>
               </Box>
-              <Box className="cardContent">
+              <Box sx={{ fontSize: "1.3rem" }}>
                 <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
                 {insurance.subscription_end_at}
               </Box>

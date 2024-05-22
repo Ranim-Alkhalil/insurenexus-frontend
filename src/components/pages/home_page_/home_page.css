@@ -3,19 +3,15 @@
     height: 20rem;
 }
 
-.home-container {}
-
 .rating_img img {
     width: 100%;
     height: 100%;
 }
 
-.section1 {
-    margin: 0;
-    padding: 0;
-    max-width: 1500px;
 
-    background-color: rgb(182, 182, 212);
+.section1 {
+    background-color: rgb(227, 227, 236);
+    padding: 2rem 1rem;
 }
 
 .h1style_home {
@@ -27,7 +23,6 @@
 }
 
 .p1style_home {
-
     width: 600px;
     height: 70px;
     font-size: 20px;
@@ -54,7 +49,6 @@
     color: rgb(13, 13, 59) !important;
     font-weight: bold;
     font-family: "Yeseva One";
-
 }
 
 .h5style_home {
@@ -85,34 +79,45 @@
     font-size: 18px;
 }
 
-
-
 .health_section,
 .car_section,
 .rating {
     margin-left: 12rem;
     margin-right: 12rem;
-
     font-family: "Yeseva One";
-
 }
-
 
 .car_section .img img {
     width: 300px;
-
 }
 
 .about_us_in_home {
+    padding: 2rem 1rem;
     font-family: "Yeseva One";
+}
 
+.about_us_in_home .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about_us_in_home h2 {
+    color: #001f3f;
+}
+
+.about_us_in_home .row-cols-1 {
+    row-gap: 2rem;
 }
 
 .feature-icon-small {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 50px;
     height: 50px;
-    background-color: rgba(15, 53, 84, 1) !important;
-    border-radius: 10px;
+    border-radius: 50%;
+    background-color: #007bff;
+    font-size: 1.5rem;
 }
 
 .feature-icon-small svg {
@@ -139,14 +144,12 @@
 
 .text-body-emphasis {
     color: rgb(7, 7, 37) !important;
-
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-image: none;
 }
-
 
 .rating_title {
     color: rgba(15, 53, 84, 1);
@@ -159,161 +162,207 @@
     font-size: 18px;
 }
 
-
-
 .text-body-emphasis {
     color: rgb(13, 13, 59) !important;
 }
 
 .text-body-secondary {
     font-family: "Yeseva One" !important;
-
     color: #919191 !important;
 }
 
-/* Responsive design settings */
+/*@media (max-width: 1200px) {
+  .health_section, .car_section, .rating {
+    margin-left: 8rem;
+    margin-right: 8rem;
+  }
+
+ 
+
+  .h1style_home, .p1style_home {
+    width: 100%;
+  }
+  .hr_style {
+    margin-bottom: 10px;
+    width: 60px;
+    height: 3px;
+    bottom: 0;
+    background: #cd9e51 !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .health_section, .car_section, .rating {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+
+  .about_us_in_home .container {
+    max-width: 100%;
+  }
+  .hr_style {
+    margin-bottom: 10px;
+    width: 90px;
+    height: 3px;
+    bottom: 0;
+    background: #cd9e51;
+  }
+}
+
 @media (max-width: 768px) {
-    .row {
-        flex-direction: column-reverse;
-    }
+  .health_section, .car_section, .rating {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .h1style_home {
-        width: 100%;
-        padding-top: 50px;
-    }
-
-    .p1style_home {
-        width: 100%;
-    }
-
-    .health_section {
-        margin-left: -100px;
-
-    }
-
-    .car_section {
-        display: flex;
-        flex-direction: column-reverse;
-        margin-left: -55px;
-    }
-
-    .p_style_car {
-        margin-right: -10px;
-    }
-
-    .customButtonColor {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-
-
-    .car-section {
-        padding-left: 310px;
-    }
-
-
-    .img-fluid2,
-    .img-fluid3 {
-        display: none;
-
-    }
-
-    .rating {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .rating_section_p {
-        order: 2;
-    }
-
-    .rating_title {
-        order: 3;
-        width: 80%;
-    }
-
-    .p1style_home {
-        width: 80%;
-    }
-
-    .p12 {
-        order: 1;
-        margin-top: 20px;
-        width: 70%;
-        margin-left: 60px;
-    }
+  .health_section div, .car_section div {
+    text-align: center;
+  }
+  .hr_style {
+    margin-bottom: 10px;
+    width: 90px;
+    height: 3px;
+    bottom: 0;
+    background: #cd9e51;
+  }
 }
 
 @media (max-width: 576px) {
-    .row {
-        flex-direction: column-reverse;
+  .section1 {
+    padding: 1rem;
+  }
+
+  
+
+  .h1style_home {
+    font-size: 35px;
+  }
+
+  .p1style_home {
+    font-size: 16px;
+    height: auto;
+  }
+
+  .customButtonColor {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .h4_style_home {
+    font-size: 24px;
+  }
+
+  .h5style_home {
+    font-size: 20px;
+  }
+
+  .p_style_home {
+    font-size: 16px;
+  }
+
+  .rating_title {
+    font-size: 24px;
+  }
+
+  .rating .p1style_home {
+    font-size: 14px;
+  }
+
+  .about_us_in_home {
+    padding: 1rem;
+  }
+
+  .about_us_in_home h2 {
+    font-size: 24px;
+  }
+
+  .about_us_in_home .row-cols-1 {
+    row-gap: 1rem;
+  }
+
+  .feature-icon-small {
+    width: 40px;
+    height: 40px;
+  }
+
+  .feature-icon-small svg {
+    padding-left: 5px;
+    padding-top: 5px;
+  }
+  .hr_style {
+    margin-bottom: 10px;
+    width: 90px;
+    height: 3px;
+    bottom: 0;
+    background: #cd9e51;
+  }}
+
+  @media screen and (max-width: 1697px) {
+    
+   .p1style_home{
+    font-size: 23px;   }
+    .h1style_home{
+      font-size: 57px;
     }
-
-    .h1style_home {
-        width: 100%;
-        padding-top: 50px;
+    .section1 {
+      width: 1700;
     }
-
-    .p1style_home {
-        width: 100%;
-    }
-
-    .health_section {
-        margin-left: -100px;
-
-    }
-
-    .car_section {
-        display: flex;
-        flex-direction: column-reverse;
-        margin-left: -55px;
-    }
-
-    .p_style_car {
-        margin-right: -10px;
-    }
-
     .customButtonColor {
-        width: 100%;
-        margin-top: 10px;
+      font-size: 20px !important;
     }
-
-
-
-    .car-section {
-        padding-left: 310px;
+    .h4_style_home{
+      font-size: 45px ;
     }
-
-
-    .img-fluid2,
-    .img-fluid3 {
-        display: none;
+    .h5style_home{
+      font-size: 35px;
+    }
+    .p_style_home{
+      font-size: 30px;
+    }
+  
+    .hr_style {
+      margin-bottom: 10px;
+      width: 70px;
+      height: 3px;
+      bottom: 0;
+      background: #cd9e51 !important;
+    }
+    .p_style_health{
+      font-size: 25px;
+    }
+    .p_style_car{
+      font-size: 25px;
 
     }
-
-    .rating {
-        display: flex;
-        flex-direction: column;
+    .text-navy{
+      font-size: 50px;
     }
-
-    .rating_section_p {
-        order: 2;
+    .family-img img{
+      height: 500px;
     }
-
-    .rating_title {
-        order: 3;
-        width: 80%;
+    .car_pic img {
+      height: 700px;
+padding-right: 30px;
     }
-
-    .p1style_home {
-        width: 80%;
+   
+    .text-body-secondary{
+      font-size: 27px !important;
+    } .text-body-emphasis{
+      font-size: 35px !important;
     }
-
-    .p12 {
-        order: 1;
-        margin-top: 20px;
-        width: 70%;
-        margin-left: 60px;
+    .about_button{
+      font-size: 30px !important;
+      padding-bottom: 10px;
     }
-}
+    .rating_title{
+      font-size: 50px;
+    }
+    .rating .p1style_home {
+      font-size: 27px;
+  }
+  .rating {
+    margin: left 900px !important ;
+  }
+}*/

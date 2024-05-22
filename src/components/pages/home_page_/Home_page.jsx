@@ -6,11 +6,13 @@ import p11 from "./photo/p11.jpg";
 import p12 from "./photo/p12.jpg";
 
 import "./home_page.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Home_page() {
+  const navigate = useNavigate();
   return (
-    <div className="container-xxl home-container">
-      <div className=" p-md-5 section1 mb-4   ">
+    <div className=" home-container ">
+      <div className=" p-md-5 section1 mb-4   Home_page d-flex  justify-content-center ">
         <div className="row align-items-center">
           <div className="col-lg-6 col-md-12">
             <h3 className="display-4 h1style_home fst-italic">
@@ -20,7 +22,11 @@ export default function Home_page() {
               Explore Leading Insurance Companies: No matter your interests, our
               collective expertise has you covered
             </p>
-            <button type="button" className="btn customButtonColor">
+            <button
+              type="button"
+              className="btn customButtonColor"
+              onClick={() => navigate("/companiesPage")}
+            >
               Insurance Companies{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +40,7 @@ export default function Home_page() {
               </svg>
             </button>
           </div>
-          <div className="col-4">
+          <div className="col-4 align-items-center  ps-5">
             <img src={p10} className=" img-fluid" />
           </div>
         </div>
@@ -69,8 +75,8 @@ export default function Home_page() {
       </div>
 
       <div className="car_section d-flex justify-content-center  align-items-center">
-        <div className="col-4">
-          <img src={p11} className="img-fluid" />
+        <div className="col-4 car_pic">
+          <img src={p11} className=" img-fluid" />
         </div>
 
         <div>
@@ -89,11 +95,11 @@ export default function Home_page() {
       </div>
 
       <div className="about_us_in_home">
-        <div className="container px-4 py-5">
+        <div className=" px-4 py-5">
           <h2 className="pb-2 border-bottom text-navy">About us</h2>
           <div className="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
             <div className="col d-flex flex-column align-items-start gap-2">
-              <h2 className="fw-bold text-navy text-body-emphasis">
+              <h2 className="fw-bold text-navy ">
                 Putting your needs first is our priority
               </h2>
               <p className="text-body-secondary">
@@ -105,7 +111,11 @@ export default function Home_page() {
                 individuals to make informed coverage decisions, shaping a
                 future of insurance that's accessible and transparent.
               </p>
-              <button type="button" className="btn customButtonColor">
+              <button
+                type="button"
+                className="btn about_button  customButtonColor"
+                onClick={() => navigate("/aboutUs")}
+              >
                 About us
               </button>
             </div>
@@ -127,7 +137,7 @@ export default function Home_page() {
                       </svg>
                     </svg>
                   </div>
-                  <h4 className="fw-semibold text-body-emphasis mb-0 text-navy">
+                  <h4 className="fw-semibold text-body-emphasis mb-0">
                     Time Saving
                   </h4>
                 </div>
@@ -196,7 +206,7 @@ export default function Home_page() {
         </div>
       </div>
 
-      <div className="rating d-flex">
+      <div className="rating d-flex justify-content-center">
         {" "}
         <div className="rating_section_p">
           <h4 className="rating_title">
@@ -208,8 +218,8 @@ export default function Home_page() {
             driving companies to improve and meet customer needs.
           </p>
         </div>
-        <div className="rating_img">
-          <img src={p12} className="p12 col-4 " />
+        <div className="rating_img col-4 ">
+          <img src={p12} className="p12 " />
         </div>
       </div>
     </div>

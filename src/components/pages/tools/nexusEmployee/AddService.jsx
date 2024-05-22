@@ -1,7 +1,6 @@
 import {
   Autocomplete,
   Button,
-  IconButton,
   Stack,
   TextField,
   Typography,
@@ -23,17 +22,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function AddService(props) {
   const [openParentDialog, setOpenParentDialog] = useState(false);
-  const [openProgramDialog, setOpenProgramDialog] = useState(false);
-  const [openChildDialog, setOpenChildDialog] = useState(false);
   const [parent, setParent] = useState(null);
   const [newParent, setNewParent] = useState(null);
-  const [program, setProgram] = useState(null);
-  const [newProgram, setNewProgram] = useState(null);
   const [child, setChild] = useState(null);
-  const [newChild, setNewChild] = useState(null);
   const [parents, setParents] = useState([]);
-  const [programs, setPrograms] = useState([]);
-  const [classes, setClasses] = useState([]);
+  const [children, setChildren] = useState([]);
+
   const [errorFields, setErrorFields] = useState([]);
   // get parent
   useEffect(() => {
@@ -49,35 +43,21 @@ export default function AddService(props) {
         (err) => {}
       );
   }, []);
-  //get program
+  //get children
   useEffect(() => {
     axios
-      .get("http://localhost:3000/nexusEmployee/programs", {
+      .get("http://localhost:3000/nexusEmployee/children", {
         headers: { SESSION_ID: getSessionId() },
         params: { param1: parent },
       })
       .then(
         (res) => {
-          setPrograms(res.data);
+          setChildren(res.data);
           console.log("get is success");
         },
         (err) => {}
       );
-  }, [parent, programs]);
-  //get class
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/nexusEmployee/classes", {
-        headers: { SESSION_ID: getSessionId() },
-      })
-      .then(
-        (res) => {
-          setClasses(res.data);
-          console.log("get is success");
-        },
-        (err) => {}
-      );
-  }, [classes]);
+  }, []);
 
   //add new parent
   const addNewParent = () => {
@@ -98,7 +78,7 @@ export default function AddService(props) {
         )
         .then((response) => {
           console.log("Service added successfully:", response.data);
-
+          setParents((prevParents) => [...prevParents, newParent]);
           setNewParent("");
 
           enqueueSnackbar("Service is added successfully", {
@@ -113,8 +93,8 @@ export default function AddService(props) {
         });
     }
   };
-  //add new programand connect to parent
-  const addNewProgram = () => {
+
+  const handleAdd = () => {
     const errors = [];
     setErrorFields(errors);
     if (errors.length === 0) {
@@ -123,69 +103,6 @@ export default function AddService(props) {
           "http://localhost:3000/nexusEmployee/addChild",
           {
             parent: parent,
-            child: newProgram,
-          },
-          {
-            headers: { SESSION_ID: getSessionId() },
-          }
-        )
-        .then((response) => {
-          console.log("Program added successfully:", response.data);
-
-          setNewProgram("");
-
-          enqueueSnackbar("Program is added successfully", {
-            variant: "success",
-          });
-        })
-        .catch((error) => {
-          console.error("Error adding Program:", error);
-          enqueueSnackbar("Failed to Add Program", {
-            variant: "error",
-          });
-        });
-    }
-  };
-  const addNewChild = () => {
-    const errors = [];
-    setErrorFields(errors);
-    if (errors.length === 0) {
-      axios
-        .post(
-          "http://localhost:3000/nexusEmployee/addParent",
-          {
-            parent: newChild,
-          },
-          {
-            headers: { SESSION_ID: getSessionId() },
-          }
-        )
-        .then((response) => {
-          console.log("Child added successfully:", response.data);
-
-          setNewChild("");
-
-          enqueueSnackbar("Child is added successfully", {
-            variant: "success",
-          });
-        })
-        .catch((error) => {
-          console.error("Error adding Child:", error);
-          enqueueSnackbar("Failed to Add Child", {
-            variant: "error",
-          });
-        });
-    }
-  };
-  const handleAdd = () => {
-    const errors = [];
-    setErrorFields(errors);
-    if (errors.length === 0) {
-      axios
-        .post(
-          "http://localhost:3000/nexusEmployee/addClass",
-          {
-            parent: program,
             child: child,
           },
           {
@@ -194,16 +111,15 @@ export default function AddService(props) {
         )
         .then((response) => {
           console.log("User added successfully:", response.data);
-
-          setNewProgram("");
-
-          enqueueSnackbar("Facility is added ", {
+          setChild("");
+          setParent("");
+          enqueueSnackbar("Service is added ", {
             variant: "success",
           });
         })
         .catch((error) => {
           console.error("Error adding user:", error);
-          enqueueSnackbar("Failed to Add Facility", {
+          enqueueSnackbar("Failed to Add Service", {
             variant: "error",
           });
         });
@@ -218,21 +134,6 @@ export default function AddService(props) {
     setOpenParentDialog(false);
   };
 
-  const handleOpenProgramDialog = () => {
-    setOpenProgramDialog(true);
-  };
-
-  const handleCloseProgramDialog = () => {
-    setOpenProgramDialog(false);
-  };
-
-  const handleOpenChildDialog = () => {
-    setOpenChildDialog(true);
-  };
-
-  const handleCloseChildDialog = () => {
-    setOpenChildDialog(false);
-  };
   return (
     <Stack
       flexDirection={"column"}
@@ -246,7 +147,7 @@ export default function AddService(props) {
       <Typography variant="h3" color={"primary"}>
         Add Service
       </Typography>
-      {/* /////////////////////////////////////// */}
+
       <Stack flexDirection={"row"}>
         <Autocomplete
           value={parent}
@@ -270,56 +171,29 @@ export default function AddService(props) {
           onClick={handleOpenParentDialog}
         />
       </Stack>
-      {/* ////////////////////////////////////////////////// */}
-      <Stack flexDirection={"row"}>
-        <Autocomplete
-          disabled={parent == null}
-          value={program}
-          onChange={(event, newValue) => {
-            setProgram(newValue);
-          }}
-          sx={{ width: 350 }}
-          options={programs}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Select Target program"
-              variant="outlined"
-              required
-            />
-          )}
-        />
-        <IconButton disabled={parent == null} onClick={handleOpenProgramDialog}>
-          <AddCircleIcon fontSize="large" sx={{ color: "#CBB26B" }} />
-        </IconButton>
-      </Stack>
-      {/* //////////////////////////////////////////////////////// */}
-      <Stack flexDirection={"row"}>
-        <Autocomplete
-          disabled={program == null}
-          value={child}
-          onChange={(event, newValue) => {
-            setChild(newValue);
-          }}
-          sx={{ width: 350 }}
-          options={classes}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Select Target Class"
-              variant="outlined"
-              required
-            />
-          )}
-        />
-        <AddCircleIcon
-          fontSize="large"
-          sx={{ color: "#CBB26B", mt: 1, ml: 2 }}
-          onClick={handleOpenChildDialog}
-        />
-      </Stack>
 
-      {/* ///////////////////////////// */}
+      <Autocomplete
+        disabled={parent == null}
+        value={child}
+        onChange={(event, newValue) => {
+          setChild(newValue);
+        }}
+        onInputChange={(event, newInputValue) => {
+          setChild(newInputValue);
+        }}
+        freeSolo
+        sx={{ width: 350 }}
+        options={children}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Select Target program"
+            variant="outlined"
+            required
+          />
+        )}
+      />
+
       <Dialog
         open={openParentDialog}
         TransitionComponent={Transition}
@@ -351,72 +225,7 @@ export default function AddService(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* //////////////////////////////////////////////// */}
 
-      <Dialog
-        open={openProgramDialog}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleCloseProgramDialog}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Add New Program"}</DialogTitle>
-        <DialogContent>
-          <TextField
-            id="newProgram"
-            label="write new program"
-            value={newProgram}
-            required
-            onChange={(e) => {
-              setNewProgram(e.target.value);
-            }}
-            sx={{ width: 350, m: 2 }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              handleCloseProgramDialog();
-              addNewProgram();
-            }}
-          >
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* /////////////////////////////////////////////////// */}
-
-      <Dialog
-        open={openChildDialog}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleCloseChildDialog}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Add New Class"}</DialogTitle>
-        <DialogContent>
-          <TextField
-            id="newClass"
-            label="write new class"
-            value={newChild}
-            required
-            onChange={(e) => {
-              setNewChild(e.target.value);
-            }}
-            sx={{ width: 350, m: 2 }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              handleCloseChildDialog();
-              addNewChild();
-            }}
-          >
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Button sx={{ width: 100 }} variant="contained" onClick={handleAdd}>
         ADD
       </Button>

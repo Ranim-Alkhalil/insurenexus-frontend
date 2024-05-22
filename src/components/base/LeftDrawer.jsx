@@ -49,71 +49,74 @@ export default function LeftDrawer(props) {
             Insurance companies
           </ListItemButton>
         </ListItem>
-
-        <ListItem>
-          <ListItemButton
-            sx={{
-              color: "#0f3554",
-              fontSize: "200",
-              height: 50,
-              typography: "h5",
-              fontWeight: "regular",
-            }}
-            onClick={() => {
-              switch (user.type) {
-                case 1:
-                  navigate("/profile/normal");
-                  break;
-                case 2:
-                  navigate("/profile/insurance-employee");
-                  break;
-                case 3:
-                  navigate("/profile/company-employee");
-                  break;
-                case 4:
-                  navigate("/profile/nexus-employee");
-                  break;
-                case 5:
-                  navigate("/profile/admin");
-                  break;
-              }
-            }}
-          >
-            Profile
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton
-            sx={{
-              color: "#0f3554",
-              fontSize: "200",
-              height: 50,
-              typography: "h5",
-              fontWeight: "regular",
-            }}
-            onClick={() => {
-              switch (user.type) {
-                case 1:
-                  navigate("/tools/normal");
-                  break;
-                case 2:
-                  navigate("/tools/insurance-employee");
-                  break;
-                case 3:
-                  navigate("/tools/company-employee");
-                  break;
-                case 4:
-                  navigate("/tools/nexus-employee");
-                  break;
-                case 5:
-                  navigate("/tools/admin");
-                  break;
-              }
-            }}
-          >
-            Tools
-          </ListItemButton>
-        </ListItem>
+        {user.signedIn && (
+          <ListItem>
+            <ListItemButton
+              sx={{
+                color: "#0f3554",
+                fontSize: "200",
+                height: 50,
+                typography: "h5",
+                fontWeight: "regular",
+              }}
+              onClick={() => {
+                switch (user.type) {
+                  case 1:
+                    navigate("/profile/normal");
+                    break;
+                  case 2:
+                    navigate("/profile/insurance-employee");
+                    break;
+                  case 3:
+                    navigate("/profile/company-employee");
+                    break;
+                  case 4:
+                    navigate("/profile/nexus-employee");
+                    break;
+                  case 5:
+                    navigate("/profile/admin");
+                    break;
+                }
+              }}
+            >
+              Profile
+            </ListItemButton>
+          </ListItem>
+        )}
+        {user.signedIn && (
+          <ListItem>
+            <ListItemButton
+              sx={{
+                color: "#0f3554",
+                fontSize: "200",
+                height: 50,
+                typography: "h5",
+                fontWeight: "regular",
+              }}
+              onClick={() => {
+                switch (user.type) {
+                  case 1:
+                    navigate("/tools/normal");
+                    break;
+                  case 2:
+                    navigate("/tools/insurance-employee");
+                    break;
+                  case 3:
+                    navigate("/tools/company-employee");
+                    break;
+                  case 4:
+                    navigate("/tools/nexus-employee");
+                    break;
+                  case 5:
+                    navigate("/tools/admin");
+                    break;
+                }
+              }}
+            >
+              Tools
+            </ListItemButton>
+          </ListItem>
+        )}
         <ListItem>
           <ListItemButton
             sx={{

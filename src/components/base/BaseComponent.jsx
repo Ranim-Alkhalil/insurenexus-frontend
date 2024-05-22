@@ -36,7 +36,12 @@ export default function BaseComponent(props) {
   function validateSession() {
     const sessionId = localStorage.getItem("sessionId");
     if (sessionId == null) {
-      navigate("/signin");
+      if (pathname === "/signin") {
+        navigate("/signin");
+        setLoading(false);
+        return;
+      }
+      navigate("/home");
       setLoading(false);
       return;
     }
@@ -52,7 +57,8 @@ export default function BaseComponent(props) {
                 signedIn: true,
                 sessionId: res.data.sessionId,
               });
-              if (pathname === "/signin") navigate("/you");
+              if (pathname === "/signin") navigate("/profile");
+              else if (pathname === "" || pathname === "/") navigate("/home");
               else navigate(pathname);
               setLoading(false);
             },
@@ -64,7 +70,8 @@ export default function BaseComponent(props) {
         }
       },
       (err) => {
-        navigate("/signin");
+        if (pathname === "/signin") navigate("/signin");
+        navigate("/home");
         setLoading(false);
       }
     );

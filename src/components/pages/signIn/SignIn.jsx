@@ -8,7 +8,7 @@ import {
   Zoom,
 } from "@mui/material";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GlobalStates } from "../../base/BaseComponent";
 import { SignInApi } from "../../../api/security/Session";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ export default function SignIn(props) {
   const { user, setUser } = useContext(GlobalStates);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState(null);
   const navigate = useNavigate();
 
   function handleSignIn() {
@@ -30,14 +31,14 @@ export default function SignIn(props) {
           localStorage.setItem("sessionId", res.data.sessionId);
           GetUserInfo().then(
             (res) => {
-              setUser({
+              const newUser = {
                 ...user,
                 ...res.data,
                 signedIn: true,
                 sessionId: res.data.sessionId,
-              });
-              console.log("navigating to home");
-              navigate("/home");
+              };
+              setUser(newUser);
+              setUserType(res.data.type);
             },
             (err) => {}
           );
@@ -46,6 +47,31 @@ export default function SignIn(props) {
       (err) => {}
     );
   }
+
+  useEffect(() => {
+    if (userType !== null) {
+      switch (userType) {
+        case 1:
+          navigate("/profile/normal");
+          break;
+        case 2:
+          navigate("/profile/insurance-employee");
+          break;
+        case 3:
+          navigate("/profile/company-employee");
+          break;
+        case 4:
+          navigate("/profile/nexus-employee");
+          break;
+        case 5:
+          navigate("/profile/admin");
+          break;
+        default:
+          break;
+      }
+    }
+  }, [userType, navigate]);
+
   return (
     <Zoom in={true}>
       <Stack

@@ -67,7 +67,23 @@ export default function AddFacility(props) {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Select Target Insurance to Add"
+            label="Select Target Insurance"
+            variant="outlined"
+            required
+          />
+        )}
+      />
+      <Autocomplete
+        value={service}
+        onChange={(event, newValue) => {
+          setService(newValue);
+        }}
+        sx={{ width: 350 }}
+        options={options}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Select Target Facility"
             variant="outlined"
             required
           />
@@ -76,9 +92,6 @@ export default function AddFacility(props) {
       <Button sx={{ width: 100 }} variant="contained" onClick={handleAdd}>
         ADD
       </Button>
-      <Typography variant="h6" color={"primary"}>
-        Your Company Facilities
-      </Typography>
     </Stack>
   );
 }

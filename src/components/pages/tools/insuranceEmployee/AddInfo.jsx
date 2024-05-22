@@ -184,7 +184,7 @@ export default function AddInfo(props) {
                   alignItems: "center",
                   width: "100%",
                   height: "100%",
-                  p: 1, // Add padding to create a margin around the image
+                  p: 1,
                 }}
               >
                 <img

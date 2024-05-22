@@ -1,64 +1,119 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Grid,
-  Stack,
-  TextField,
-  ThemeProvider,
+  Card,
+  CardContent,
   Typography,
+  Box,
   createTheme,
+  ThemeProvider,
 } from "@mui/material";
-import DisplayBoxWithBorder from "../normal/components/DisplayBoxWithBorder";
 import { getSessionId } from "../../../../api/SessionIdUtils";
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { GlobalStates } from "../../../base/BaseComponent";
-const profile = createTheme({
+import UserGrowthChart from "./UserGrowthChart";
+
+const theme = createTheme({
   palette: {
     primary: {
       main: "#0f3554",
     },
-    action: {
-      disabled: "#CBB26B",
+    secondary: {
+      main: "#CBB26B",
     },
-    text: {
-      disabled: "#0f3554",
+  },
+  typography: {
+    h4: {
+      fontWeight: 600,
     },
   },
 });
+
 export default function AdminInfo(props) {
-  const { user, setUser } = useContext(GlobalStates);
+  const [options, setOptions] = useState({
+    insuranceCompaniesCount: 0,
+    subscribedCompaniesCount: 0,
+    usersType2Count: 0,
+    usersType4Count: 0,
+  });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/admin/webInfo", {
+        headers: { SESSION_ID: getSessionId() },
+      })
+      .then((res) => {
+        setOptions(res.data);
+        console.log("Fetch was successful");
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+      });
+  }, []);
 
   return (
-    <ThemeProvider theme={profile}>
-      <Stack
-        flexDirection={"column"}
-        height={"100%"}
-        width="100%"
-        gap={3}
-        justifyContent={"flex-start"}
-        alignItems={"flex-start"}
-        p={2}
-      >
-        <Typography variant="h3" color={"#0f3554"}>
-          Personal information
-        </Typography>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ flexGrow: 1, p: 3 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <DisplayBoxWithBorder
-              title="Name"
-              value={user.firstName + " " + user.lastName}
-            />
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Employees
+                </Typography>
+                <Typography variant="h2" color="secondary">
+                  {options.usersType4Count}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <DisplayBoxWithBorder title="Email" value={user.email} />
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Clients
+                </Typography>
+                <Typography variant="h2" color="primary">
+                  {options.usersType2Count}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <DisplayBoxWithBorder title="National ID" value={user.nationalId} />
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Subscribed Companies
+                </Typography>
+                <Typography variant="h2" color="secondary">
+                  {options.subscribedCompaniesCount}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <DisplayBoxWithBorder title="Phone Number" value={user.phoneNum} />
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Insurance Companies
+                </Typography>
+                <Typography variant="h2" color="primary">
+                  {options.insuranceCompaniesCount}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  User Growth Over Time
+                </Typography>
+                <UserGrowthChart />
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
-      </Stack>
+      </Box>
     </ThemeProvider>
   );
 }

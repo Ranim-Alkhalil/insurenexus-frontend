@@ -14,14 +14,16 @@ import { useNavigate } from "react-router-dom";
 
 export default function TopAppBar(props) {
   const { user, setUser } = useContext(GlobalStates);
-  const naviaget = useNavigate();
+  const navigate = useNavigate();
 
   function handleSingout() {
     localStorage.removeItem("sessionId");
-    naviaget("/signin");
+    navigate("/home");
     setUser({ signedIn: false });
   }
-
+  function handleSignin() {
+    navigate("/signin");
+  }
   return (
     <AppBar position="fixed" color="primary">
       <Toolbar>
@@ -32,24 +34,27 @@ export default function TopAppBar(props) {
           alignItems={"space-betweem"}
         >
           <Stack flexDirection={"row"} flexWrap={"nowrap"} width={"100%"}>
-            {user.signedIn && (
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                sx={{ mr: 1 }}
-                onClick={props.toggleDrawer}
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 1 }}
+              onClick={props.toggleDrawer}
+            >
+              <MenuIcon />
+            </IconButton>
+
             <img height="55px" src="/logo.png" />
           </Stack>
           <Stack flexDirection={"row"} flexWrap={"nowrap"}>
-            {user.signedIn && (
+            {user.signedIn ? (
               <IconButton size="large" color="inherit" onClick={handleSingout}>
                 <LogoutIcon />
               </IconButton>
+            ) : (
+              <Button color="inherit" onClick={handleSignin}>
+                Sign In
+              </Button>
             )}
           </Stack>
         </Stack>

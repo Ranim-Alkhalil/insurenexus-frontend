@@ -8,7 +8,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import BaseComponent from "./components/base/BaseComponent";
 import SignIn from "./components/pages/signIn/SignIn";
-import Home from "./components/pages/home/Home";
+
 import { SnackbarProvider } from "notistack";
 import Profile from "./components/pages/profile/Base";
 import NormalUserProfile from "./components/pages/profile/normal/Base";

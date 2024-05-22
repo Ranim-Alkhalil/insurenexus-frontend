@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import InputText from "../../createUser/InputText";
+
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { getSessionId } from "../../../../api/SessionIdUtils";
@@ -92,11 +92,8 @@ export default function AddInsuNexus(props) {
       justifyContent={"flex-start"}
       alignItems={"flex-start"}
       p={2}
+      mt={4}
     >
-      <Typography variant="h3" color={"primary"}>
-        Add Employee
-      </Typography>
-
       <Stack
         width="100%"
         flexDirection="row"

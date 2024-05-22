@@ -20,6 +20,12 @@ import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import cover from "./image/cover.jpg";
 import { useParams } from "react-router-dom";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import HomeIcon from "@mui/icons-material/Home";
+import MailIcon from "@mui/icons-material/Mail";
+import FaxIcon from "@mui/icons-material/Fax";
+import DescriptionIcon from "@mui/icons-material/Description";
 
 import styled from "@emotion/styled";
 import { getSessionId } from "../../../api/SessionIdUtils";
@@ -94,10 +100,10 @@ export default function Company(props) {
       });
   }, []);
   const StyledBox = styled(Box)({
-    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Adding a shadow
-    padding: "20px", // Adding padding for spacing
-    borderRadius: "8px", // Adding border radius for rounded corners
-    backgroundColor: "#fff", // Setting background color
+    boxShadow: "0px 4px 6px #0f3554",
+    padding: "20px",
+    borderRadius: "8px",
+    backgroundColor: "#fff",
   });
   return (
     <Stack
@@ -107,7 +113,7 @@ export default function Company(props) {
       gap={3}
       justifyContent={"flex-start"}
       alignItems={"flex-start"}
-      sx={{ overflowX: "hidden" }} // Set overflowX to hidden
+      sx={{ overflowX: "hidden" }}
     >
       <img src={cover} />
 
@@ -117,45 +123,47 @@ export default function Company(props) {
         </Typography>
         <Rating value={rate} precision={0.5} readOnly sx={{ pt: 2, pl: 2 }} />
       </Stack>
-      <Box pl={2}>
-        <TableContainer
-          style={{ width: "100%", height: "auto", overflowX: "auto" }}
-        >
-          <Table style={{ width: "auto" }}>
-            <TableBody>
-              <TableRow>
-                <TableCell>Description:</TableCell>
-                <TableCell>{info.description}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Phone Number:</TableCell>
-                <TableCell>{info.phone_number}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Email:</TableCell>
-                <TableCell>{info.email}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Address:</TableCell>
-                <TableCell>{info.address}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Mail:</TableCell>
-                <TableCell>{info.mail}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Fax:</TableCell>
-                <TableCell>{info.fax}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+        <Typography>
+          <DescriptionIcon sx={{ color: "#CBB26B" }}></DescriptionIcon>
+        </Typography>
+        <Typography>{info.description}</Typography>
+      </Stack>
+      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+        <Typography>
+          <LocalPhoneIcon sx={{ color: "#CBB26B" }}></LocalPhoneIcon>
+        </Typography>
+        <Typography>{info.phone_number}</Typography>
+      </Stack>
+      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+        <Typography>
+          <AlternateEmailIcon sx={{ color: "#CBB26B" }}></AlternateEmailIcon>
+        </Typography>
+        <Typography>{info.email}</Typography>
+      </Stack>
+      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+        <Typography>
+          <HomeIcon sx={{ color: "#CBB26B" }}></HomeIcon>
+        </Typography>
+        <Typography>{info.address}</Typography>
+      </Stack>
+      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+        <Typography>
+          <MailIcon sx={{ color: "#CBB26B" }}></MailIcon>
+        </Typography>
+        <Typography>{info.mail}</Typography>
+      </Stack>
+      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+        <Typography>
+          <FaxIcon sx={{ color: "#CBB26B" }}></FaxIcon>
+        </Typography>
+        <Typography>{info.fax}</Typography>
+      </Stack>
 
       <Typography variant="h4" color="primary" pt={5} pl={2}>
         Types of Insurances
       </Typography>
-      <Stack direction="row" spacing={2} pl={2} flexWrap={"wrap"}>
+      <Stack direction="row" spacing={8} pl={2} flexWrap={"wrap"}>
         {insurances.map((insurance, index) => (
           <Box
             key={index}
@@ -166,21 +174,20 @@ export default function Company(props) {
             alignItems="center"
           >
             <Paper
-              elevation={3}
-              style={{ padding: "10px", width: "100%", height: "100%" }}
+              sx={{
+                padding: "10px",
+                width: "auto",
+                height: "50%",
+                boxShadow: "1px 2px 4px #0f3554",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
               <Stack direction="column" spacing={5} alignItems="center" pt={3}>
                 <Typography variant="h5" color="primary">
                   {insurance}
                 </Typography>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  href={insurance.pdfLink}
-                  target="_blank"
-                >
-                  PDF
-                </Button>
               </Stack>
             </Paper>
           </Box>
@@ -210,7 +217,8 @@ export default function Company(props) {
                 marginBottom: "20px",
                 width: "1000px",
                 height: "auto",
-                border: "1px solid #CBB26B",
+                boxShadow: "2px 2px 8px #DDC285",
+                // border: "1px solid #CBB26B",
               }}
             >
               <Typography variant="h6" color={"primary"}>
