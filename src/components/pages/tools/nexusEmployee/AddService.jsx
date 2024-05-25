@@ -29,7 +29,7 @@ export default function AddService(props) {
   const [children, setChildren] = useState([]);
 
   const [errorFields, setErrorFields] = useState([]);
-  // get parent
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/nexusEmployee/serviceParent", {
@@ -43,12 +43,11 @@ export default function AddService(props) {
         (err) => {}
       );
   }, []);
-  //get children
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/nexusEmployee/children", {
         headers: { SESSION_ID: getSessionId() },
-        params: { param1: parent },
       })
       .then(
         (res) => {
@@ -59,9 +58,12 @@ export default function AddService(props) {
       );
   }, []);
 
-  //add new parent
   const addNewParent = () => {
     const errors = [];
+
+    if (!newParent) {
+      errors.push("Parent name cannot be empty");
+    }
 
     setErrorFields(errors);
 
@@ -96,6 +98,15 @@ export default function AddService(props) {
 
   const handleAdd = () => {
     const errors = [];
+
+    if (!parent) {
+      errors.push("Parent name cannot be empty");
+    }
+
+    if (!child) {
+      errors.push("Child name cannot be empty");
+    }
+
     setErrorFields(errors);
     if (errors.length === 0) {
       axios
@@ -110,15 +121,15 @@ export default function AddService(props) {
           }
         )
         .then((response) => {
-          console.log("User added successfully:", response.data);
+          console.log("Service is added successfully:", response.data);
           setChild("");
           setParent("");
-          enqueueSnackbar("Service is added ", {
+          enqueueSnackbar("Service is added successfully", {
             variant: "success",
           });
         })
         .catch((error) => {
-          console.error("Error adding user:", error);
+          console.error("Error adding service:", error);
           enqueueSnackbar("Failed to Add Service", {
             variant: "error",
           });

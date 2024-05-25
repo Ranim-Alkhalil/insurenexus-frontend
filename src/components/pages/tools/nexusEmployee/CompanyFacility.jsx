@@ -8,14 +8,21 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import Slide from "@mui/material/Slide";
 import { getSessionId } from "../../../../api/SessionIdUtils";
 import { enqueueSnackbar } from "notistack";
 
-export default function CompanyService(props) {
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function CompanyFacility(props) {
   const [options, setOptions] = useState([]);
   const [company_name, setcompany_name] = useState(null);
   const [service, setService] = useState(null);
-  const [services, setServices] = useState(null);
+  const [facility, setFacility] = useState(null);
+  const [option, setOption] = useState([]);
+  const [facilities, setFacilities] = useState([]);
 
   const [errorFields, setErrorFields] = useState([]);
   useEffect(() => {
@@ -33,12 +40,28 @@ export default function CompanyService(props) {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/insuranceEmployee/Insurances", {
+      .get("http://localhost:3000/nexusEmployee/compInsurances", {
+        headers: { SESSION_ID: getSessionId() },
+        params: { param1: company_name },
+      })
+      .then(
+        (res) => {
+          setOption(res.data);
+          console.log("get is success");
+        },
+        (err) => {
+          console.error("Failed to fetch insurances", err);
+        }
+      );
+  }, [company_name]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/nexusEmployee/facilities", {
         headers: { SESSION_ID: getSessionId() },
       })
       .then(
         (res) => {
-          setServices(res.data);
+          setFacilities(res.data);
           console.log("get is success");
         },
         (err) => {
@@ -46,41 +69,35 @@ export default function CompanyService(props) {
         }
       );
   }, []);
+
   const handleAdd = () => {
     const errors = [];
-
-    if (!company_name) {
-      errors.push("Company name cannot be empty.");
-    }
-    if (!service) {
-      errors.push("Service cannot be empty.");
-    }
-
     setErrorFields(errors);
-
     if (errors.length === 0) {
       axios
         .post(
-          "http://localhost:3000/nexusEmployee/addInsurance",
+          "http://localhost:3000/nexusEmployee/addFacilityComp",
           {
             company_name: company_name,
             service: service,
+            facility: facility,
           },
           {
             headers: { SESSION_ID: getSessionId() },
           }
         )
         .then((response) => {
-          console.log("Service added successfully:", response.data);
-          setService(null);
-          setcompany_name(null);
-          enqueueSnackbar("Service is added ", {
+          console.log("Facility added successfully:", response.data);
+          setFacility("");
+          setService("");
+          setcompany_name("");
+          enqueueSnackbar("Facility is added ", {
             variant: "success",
           });
         })
         .catch((error) => {
-          console.error("Error adding service:", error);
-          enqueueSnackbar("Failed to add Service", {
+          console.error("Error adding facility:", error);
+          enqueueSnackbar("Failed to add facility", {
             variant: "error",
           });
         });
@@ -98,7 +115,7 @@ export default function CompanyService(props) {
       p={2}
     >
       <Typography variant="h3" color={"primary"}>
-        Add service for company
+        Add facility for company
       </Typography>
 
       <Autocomplete
@@ -125,11 +142,28 @@ export default function CompanyService(props) {
           setService(newValue);
         }}
         sx={{ width: 350 }}
-        options={services}
+        options={option}
         renderInput={(params) => (
           <TextField
             {...params}
             label="Select Target Insurance"
+            variant="outlined"
+            required
+          />
+        )}
+      />
+      <Autocomplete
+        disabled={service == null}
+        value={facility}
+        onChange={(event, newValue) => {
+          setFacility(newValue);
+        }}
+        sx={{ width: 350 }}
+        options={facilities}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Select Target Facility"
             variant="outlined"
             required
           />

@@ -5,6 +5,7 @@ import AddInsuComp from "./AddInsuComp";
 import AddInsuranceCompUser from "./AddInsuranceCompUser";
 import AddFacility from "./AddFacility";
 import AddService from "./AddService";
+import CompanyFacility from "./CompanyFacility";
 import CompanyService from "./CompanyService";
 
 export default function NexusEmployeeTools(props) {
@@ -27,13 +28,7 @@ export default function NexusEmployeeTools(props) {
               setSelectedPanel("AddEmp");
             }}
           />
-          <Tab
-            label="Add Facility"
-            sx={{ fontSize: 20, color: "#0f3554" }}
-            onClick={() => {
-              setSelectedPanel("AddFacility");
-            }}
-          />
+
           <Tab
             label="Add service"
             sx={{ fontSize: 20, color: "#0f3554" }}
@@ -42,7 +37,21 @@ export default function NexusEmployeeTools(props) {
             }}
           />
           <Tab
-            label="Add service for a company"
+            label="Add Facility"
+            sx={{ fontSize: 20, color: "#0f3554" }}
+            onClick={() => {
+              setSelectedPanel("AddFacility");
+            }}
+          />
+          <Tab
+            label="Add facility for company"
+            sx={{ fontSize: 20, color: "#0f3554" }}
+            onClick={() => {
+              setSelectedPanel("CompanyFacility");
+            }}
+          />
+          <Tab
+            label="Add service for company"
             sx={{ fontSize: 20, color: "#0f3554" }}
             onClick={() => {
               setSelectedPanel("CompanyService");
@@ -55,6 +64,7 @@ export default function NexusEmployeeTools(props) {
       {selectedPanel === "AddEmp" && <AddInsuranceCompUser />}
       {selectedPanel === "AddFacility" && <AddFacility />}
       {selectedPanel === "AddService" && <AddService />}
+      {selectedPanel === "CompanyFacility" && <CompanyFacility />}
       {selectedPanel === "CompanyService" && <CompanyService />}
     </>
   );

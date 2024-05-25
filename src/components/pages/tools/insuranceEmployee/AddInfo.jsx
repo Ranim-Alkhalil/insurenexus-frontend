@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getSessionId } from "../../../../api/SessionIdUtils";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
 import {
   Box,
   Button,
   Card,
   CardContent,
   Stack,
-  TextField,
   Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Slide,
 } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
 export default function AddInfo(props) {
-  const [newParent, setNewParent] = useState(null);
-  const [openParentDialog, setOpenParentDialog] = useState(false);
   const [description, setDescription] = useState("");
   const [img, setImg] = useState(null);
   const [pdf, setPdf] = useState(null);
   const [newDescription, setNewDescription] = useState("");
   const [newImg, setNewImg] = useState(null);
   const [newPdf, setNewPdf] = useState(null);
+  const [openParentDialog, setOpenParentDialog] = useState(false);
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/insuranceEmployee/compInfo", {
@@ -37,7 +38,17 @@ export default function AddInfo(props) {
       .then((res) => {
         setNewDescription(res.data.description);
         setNewImg(res.data.logo);
-        setNewPdf(res.data.pdf);
+
+        if (res.data.pdf) {
+          const byteCharacters = atob(res.data.pdf.split(",")[1]);
+          const byteNumbers = new Array(byteCharacters.length)
+            .fill(null)
+            .map((_, i) => byteCharacters.charCodeAt(i));
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray], { type: "application/pdf" });
+          const pdfUrl = URL.createObjectURL(blob);
+          setNewPdf(pdfUrl);
+        }
       })
       .catch((err) => {
         console.error("Failed to fetch company info", err);
@@ -70,12 +81,8 @@ export default function AddInfo(props) {
     axios
       .post(
         "http://localhost:3000/insuranceEmployee/updateDescription",
-        {
-          description: description,
-        },
-        {
-          headers: { SESSION_ID: getSessionId() },
-        }
+        { description: description },
+        { headers: { SESSION_ID: getSessionId() } }
       )
       .then((response) => {
         console.log("Description updated successfully:", response.data);
@@ -94,12 +101,8 @@ export default function AddInfo(props) {
       axios
         .post(
           "http://localhost:3000/insuranceEmployee/updatePdf",
-          {
-            pdf: pdfResult,
-          },
-          {
-            headers: { SESSION_ID: getSessionId() },
-          }
+          { pdf: pdfResult },
+          { headers: { SESSION_ID: getSessionId() } }
         )
         .then((response) => {
           console.log("PDF updated successfully:", response.data);
@@ -117,12 +120,8 @@ export default function AddInfo(props) {
       axios
         .post(
           "http://localhost:3000/insuranceEmployee/updateLogo",
-          {
-            logo: imgResult,
-          },
-          {
-            headers: { SESSION_ID: getSessionId() },
-          }
+          { logo: imgResult },
+          { headers: { SESSION_ID: getSessionId() } }
         )
         .then((response) => {
           console.log("Logo updated successfully:", response.data);
@@ -134,6 +133,7 @@ export default function AddInfo(props) {
         });
     });
   }
+
   const handleOpenDialog = () => {
     setOpenParentDialog(true);
   };
@@ -141,6 +141,7 @@ export default function AddInfo(props) {
   const handleCloseDialog = () => {
     setOpenParentDialog(false);
   };
+
   return (
     <Stack
       flexDirection={"column"}
@@ -216,13 +217,13 @@ export default function AddInfo(props) {
             style={{ display: "none" }}
           />
           <Typography>
-            {img != null ? "Selected File : " + img.name : "Please Select logo"}
+            {img != null
+              ? "Selected File : " + img.name
+              : "Please Select logo."}
           </Typography>
           <Button
             variant="contained"
-            onClick={() => {
-              document.getElementById("image-input").click();
-            }}
+            onClick={() => document.getElementById("image-input").click()}
           >
             Select logo
           </Button>
@@ -282,16 +283,13 @@ export default function AddInfo(props) {
           <Typography>
             {pdf != null
               ? "Selected File : " + pdf.name
-              : "Please Select Brochoure File!"}
+              : "Please Select Brochure File."}
           </Typography>
-
           <Button
             variant="contained"
-            onClick={() => {
-              document.getElementById("pdf-manual-input").click();
-            }}
+            onClick={() => document.getElementById("pdf-manual-input").click()}
           >
-            Select Brochoure PDF
+            Select Brochure PDF
           </Button>
           <Button
             sx={{ width: 100 }}
@@ -331,14 +329,22 @@ export default function AddInfo(props) {
             )}
           </CardContent>
         </Card>
-
-        <Button
-          sx={{ width: 100, ml: 8, mt: 5 }}
-          variant="contained"
-          onClick={handleOpenDialog}
+        <Stack
+          flexDirection={"column"}
+          gap={2}
+          alignItems={"left"}
+          pl={8}
+          pt={2}
         >
-          Edit Description
-        </Button>
+          <Typography>Please enter discription.</Typography>
+          <Button
+            sx={{ width: 100 }}
+            variant="contained"
+            onClick={handleOpenDialog}
+          >
+            Edit Description
+          </Button>
+        </Stack>
       </Stack>
       <Dialog
         sx={{

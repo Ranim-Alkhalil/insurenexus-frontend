@@ -11,7 +11,7 @@ import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import { GlobalStates } from "../../base/BaseComponent";
 import { SignInApi } from "../../../api/security/Session";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GetUserInfo } from "../../../api/user/User";
 
 export default function SignIn(props) {
@@ -105,7 +105,24 @@ export default function SignIn(props) {
           }}
           value={password}
         />
-
+        <Link
+          component="button"
+          variant="body2"
+          onClick={() => {
+            navigate("/forgotPassword");
+          }}
+          underline="hover"
+        >
+          Forgot Password?
+        </Link>
+        <Button
+          color="primary"
+          variant="contained"
+          sx={{ width: 120 }}
+          onClick={() => navigate("/forgotPassword")}
+        >
+          forgot
+        </Button>
         <Button
           color="primary"
           variant="contained"

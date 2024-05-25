@@ -125,12 +125,25 @@ export default function Header() {
                   to={`/company/${encodeURIComponent(company)}`}
                 >
                   <Stack flexDirection={"column"} alignItems={"center"}>
-                    <Box>
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      justifyContent="center"
+                      height="130px"
+                    >
                       {images[company] ? (
                         <img
                           src={images[company]}
                           alt="Company logo"
-                          style={{ width: "80px", height: "80px" }}
+                          s
+                          style={{
+                            maxWidth: "150px",
+                            maxHeight: "90px",
+                            width: "auto",
+                            height: "auto",
+                            objectFit: "contain",
+                          }}
                         />
                       ) : (
                         <p>No Logo</p>

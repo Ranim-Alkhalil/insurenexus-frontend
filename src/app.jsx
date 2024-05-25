@@ -26,6 +26,7 @@ import Company from "./components/pages/company/Company";
 import Home_page from "./components/pages/home_page_/Home_page";
 import AdminProfile from "./components/pages/profile/Admin/Base";
 import AdminTools from "./components/pages/tools/Admin/Base";
+import ForgotPassword from "./components/pages/signIn/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,7 @@ const router = createBrowserRouter([
       { path: "company/:companyName", element: <Company /> },
       { path: "companiesPage", element: <Header /> },
       { path: "aboutUs", element: <About /> },
+      { path: "forgotPassword", element: <ForgotPassword /> },
     ],
   },
 ]);

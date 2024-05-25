@@ -1,23 +1,16 @@
 import {
-  Autocomplete,
-  Box,
   Button,
   Divider,
-  Grid,
+  List,
+  ListItem,
+  ListItemText,
   Paper,
   Rating,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  TextField,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { enqueueSnackbar } from "notistack";
 import cover from "./image/cover.jpg";
 import { useParams } from "react-router-dom";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -26,12 +19,14 @@ import HomeIcon from "@mui/icons-material/Home";
 import MailIcon from "@mui/icons-material/Mail";
 import FaxIcon from "@mui/icons-material/Fax";
 import DescriptionIcon from "@mui/icons-material/Description";
-
-import styled from "@emotion/styled";
+import CircleIcon from "@mui/icons-material/Circle";
 import { getSessionId } from "../../../api/SessionIdUtils";
+import DownloadIcon from "@mui/icons-material/Download";
+
 export default function Company(props) {
   const [info, setInfo] = useState([]);
   const [rate, setRate] = useState(null);
+  const [image, setImage] = useState(null);
   const [comments, setComments] = useState([]);
   const [insurances, setInsurances] = useState([]);
   const { companyName } = useParams();
@@ -99,12 +94,42 @@ export default function Company(props) {
         console.error(err);
       });
   }, []);
-  const StyledBox = styled(Box)({
-    boxShadow: "0px 4px 6px #0f3554",
-    padding: "20px",
-    borderRadius: "8px",
-    backgroundColor: "#fff",
-  });
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compImage", {
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setImage(res.data.image);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  const handleDownload = () => {
+    axios
+      .get("http://localhost:3000/user/compPdf", {
+        params: { param1: companyName },
+        responseType: "blob",
+      })
+      .then((response) => {
+        const url = window.URL.createObjectURL(
+          new Blob([response.data], { type: "application/pdf" })
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "document.pdf");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      })
+      .catch((error) => {
+        console.error("There was an error downloading the PDF!", error);
+      });
+  };
   return (
     <Stack
       flexDirection={"column"}
@@ -117,83 +142,118 @@ export default function Company(props) {
     >
       <img src={cover} />
 
-      <Stack direction="row" pl={2}>
+      <Stack
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
+        pl={2}
+      >
         <Typography variant="h3" color="primary">
           {companyName}
         </Typography>
-        <Rating value={rate} precision={0.5} readOnly sx={{ pt: 2, pl: 2 }} />
-      </Stack>
-      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
-        <Typography>
-          <DescriptionIcon sx={{ color: "#CBB26B" }}></DescriptionIcon>
-        </Typography>
-        <Typography>{info.description}</Typography>
-      </Stack>
-      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
-        <Typography>
-          <LocalPhoneIcon sx={{ color: "#CBB26B" }}></LocalPhoneIcon>
-        </Typography>
-        <Typography>{info.phone_number}</Typography>
-      </Stack>
-      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
-        <Typography>
-          <AlternateEmailIcon sx={{ color: "#CBB26B" }}></AlternateEmailIcon>
-        </Typography>
-        <Typography>{info.email}</Typography>
-      </Stack>
-      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
-        <Typography>
-          <HomeIcon sx={{ color: "#CBB26B" }}></HomeIcon>
-        </Typography>
-        <Typography>{info.address}</Typography>
-      </Stack>
-      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
-        <Typography>
-          <MailIcon sx={{ color: "#CBB26B" }}></MailIcon>
-        </Typography>
-        <Typography>{info.mail}</Typography>
-      </Stack>
-      <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
-        <Typography>
-          <FaxIcon sx={{ color: "#CBB26B" }}></FaxIcon>
-        </Typography>
-        <Typography>{info.fax}</Typography>
+        <Rating
+          value={rate}
+          precision={0.5}
+          readOnly
+          sx={{ pt: 2, pl: 2, pr: 8 }}
+        />
+
+        {image && (
+          <img
+            src={image}
+            alt="Company logo"
+            style={{
+              maxWidth: "300px",
+              maxHeight: "400px",
+              width: "auto",
+              height: "auto",
+              objectFit: "contain",
+            }}
+          />
+        )}
       </Stack>
 
-      <Typography variant="h4" color="primary" pt={5} pl={2}>
+      <Divider
+        sx={{ width: "100%", mt: 1, mb: 1, borderWidth: "1.5px" }}
+        color={"#CBB26B"}
+      />
+      <Stack direction="column" spacing={3} pl={2}>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <DescriptionIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem", width: "1200px" }}>
+            {info.description}
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <LocalPhoneIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>
+            {info.phone_number}
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <AlternateEmailIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>{info.email}</Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <HomeIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>{info.address}</Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <MailIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>{info.mail}</Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <FaxIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>{info.fax}</Typography>
+        </Stack>
+      </Stack>
+      <Typography variant="h5" color="primary" pt={10} pl={2}>
+        Company brochure
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<DownloadIcon />}
+        onClick={handleDownload}
+        sx={{ ml: 3 }}
+      >
+        Download PDF
+      </Button>
+
+      <Typography variant="h4" color="primary" pt={10} pl={2}>
         Types of Insurances
       </Typography>
-      <Stack direction="row" spacing={8} pl={2} flexWrap={"wrap"}>
+      <List sx={{ pl: 2 }}>
         {insurances.map((insurance, index) => (
-          <Box
-            key={index}
-            width="200px"
-            height="150px"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Paper
-              sx={{
-                padding: "10px",
-                width: "auto",
-                height: "50%",
-                boxShadow: "1px 2px 4px #0f3554",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+          <ListItem key={index} disableGutters>
+            <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
+            <ListItemText
+              primary={insurance}
+              primaryTypographyProps={{
+                color: "primary",
+                fontSize: "1.5rem",
+                pl: 2,
               }}
-            >
-              <Stack direction="column" spacing={5} alignItems="center" pt={3}>
-                <Typography variant="h5" color="primary">
-                  {insurance}
-                </Typography>
-              </Stack>
-            </Paper>
-          </Box>
+            />
+          </ListItem>
         ))}
-      </Stack>
-
+      </List>
+      <Divider
+        sx={{ width: "100%", mt: 1, borderWidth: "1.5px" }}
+        color={"#CBB26B"}
+      />
       <Stack
         flexDirection={"column"}
         height={"100%"}
@@ -203,7 +263,7 @@ export default function Company(props) {
         alignItems={"center"}
         pl={2}
       >
-        <Typography variant="h4" color="primary" mt={10}>
+        <Typography variant="h4" color="primary" mt={4}>
           Users Reviews
         </Typography>
         {comments.length > 0 ? (
@@ -215,10 +275,9 @@ export default function Company(props) {
                 padding: "10px",
                 marginTop: "10px",
                 marginBottom: "20px",
+
                 width: "1000px",
                 height: "auto",
-                boxShadow: "2px 2px 8px #DDC285",
-                // border: "1px solid #CBB26B",
               }}
             >
               <Typography variant="h6" color={"primary"}>

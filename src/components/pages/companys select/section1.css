@@ -1,7 +1,5 @@
 .shadow-section {
     box-shadow: 0 10px 20px -10px #0f3554;
-
-
 }
 
 .center_div {
@@ -11,24 +9,19 @@
 }
 
 .h3style {
-
     font-size: 80px !important;
-    color:  #0f3554;
+    color: #0f3554;
     font-weight: bold;
     text-shadow: 1px 1px rgb(66, 66, 66);
-
 }
 
 .p1style {
     text-align: center;
-
     height: 70px;
     font-size: 20px;
     margin-bottom: 30px;
     color: #919191;
-
 }
-
 
 .customButtonColor {
     height: 50px;
@@ -41,9 +34,7 @@
     margin-right: 30px;
     color: white;
     text-shadow: 2px 2px rgb(70, 69, 69);
-
 }
-
 
 .container {
     width: 100%;
@@ -55,7 +46,6 @@
 .hr_style {
     border: 10px;
 }
-
 
 .hr_style {
     border: none;
@@ -82,25 +72,36 @@
     font-size: 30px;
     color: #b4995b;
     margin-bottom: 50px;
-
 }
 
 .companies_section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 }
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    /* Adjust the gap between the grid items as needed */
     justify-content: center;
-    margin: 50px;
+    width: 80%;
+    /* Adjust the width as needed to fit your design */
+    margin: 50px auto;
+    /* Center the grid container */
 }
 
 .companies_info {
     border: #d3d1d1 solid 2px;
     border-radius: 30px;
     box-shadow: rgba(8, 34, 46, 0.12) 0px 2px 4px 0px, rgba(8, 34, 46, 0.12) 0px 2px 16px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .companies_info .customButtonColor {
@@ -113,7 +114,6 @@
     font-weight: bold;
     font-size: 25px;
     color: rgb(13, 13, 59);
-
 }
 
 @media (min-width: 1600px) {

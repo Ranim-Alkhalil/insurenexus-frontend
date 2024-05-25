@@ -21,7 +21,6 @@ export default function AddServices(props) {
 
   const cardRefs = useRef([]);
 
-  // Fetch company insurances on component mount
   useEffect(() => {
     axios
       .get("http://localhost:3000/insuranceEmployee/compInsurances", {
@@ -38,7 +37,6 @@ export default function AddServices(props) {
       );
   }, []);
 
-  // Fetch all available services on component mount
   useEffect(() => {
     axios
       .get("http://localhost:3000/insuranceEmployee/Insurances", {
