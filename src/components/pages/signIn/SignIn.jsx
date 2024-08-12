@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
   Zoom,
+  Alert,
 } from "@mui/material";
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
@@ -19,6 +20,7 @@ export default function SignIn(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   function handleSignIn() {
@@ -42,9 +44,13 @@ export default function SignIn(props) {
             },
             (err) => {}
           );
+        } else {
+          setErrorMessage(res.data.message); // Set the error message
         }
       },
-      (err) => {}
+      (err) => {
+        setErrorMessage("An error occurred. Please try again."); // Handle network or other errors
+      }
     );
   }
 
@@ -83,6 +89,7 @@ export default function SignIn(props) {
         alignItems={"center"}
       >
         <Typography variant="h3">Sign In</Typography>
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
         <TextField
           label="Email"
           type="email"
@@ -105,24 +112,7 @@ export default function SignIn(props) {
           }}
           value={password}
         />
-        <Link
-          component="button"
-          variant="body2"
-          onClick={() => {
-            navigate("/forgotPassword");
-          }}
-          underline="hover"
-        >
-          Forgot Password?
-        </Link>
-        <Button
-          color="primary"
-          variant="contained"
-          sx={{ width: 120 }}
-          onClick={() => navigate("/forgotPassword")}
-        >
-          forgot
-        </Button>
+
         <Button
           color="primary"
           variant="contained"
@@ -130,6 +120,13 @@ export default function SignIn(props) {
           onClick={handleSignIn}
         >
           Sign In
+        </Button>
+        <Button
+          color="primary"
+          sx={{ width: 180 }}
+          onClick={() => navigate("/forgotPassword")}
+        >
+          forgot password ?
         </Button>
       </Stack>
     </Zoom>

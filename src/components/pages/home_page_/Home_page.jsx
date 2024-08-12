@@ -8,6 +8,7 @@ import p12 from "./photo/p12.jpg";
 import "./home_page.css";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
+import Footer from "../footer_section/Footer_pages";
 
 export default function Home_page() {
   const navigate = useNavigate();
@@ -226,6 +227,7 @@ export default function Home_page() {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </Stack>
   );
 }

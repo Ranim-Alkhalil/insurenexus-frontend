@@ -52,7 +52,11 @@ export default function TopAppBar(props) {
                 <LogoutIcon />
               </IconButton>
             ) : (
-              <Button color="inherit" onClick={handleSignin}>
+              <Button
+                color="inherit"
+                onClick={handleSignin}
+                sx={{ width: "100px" }}
+              >
                 Sign In
               </Button>
             )}

@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { Box, Rating, Tab, Tabs } from "@mui/material";
 import Rate from "./Rating";
-import EditInfo from "./EditInfo";
 
 export default function NormalUserTools(props) {
   const [selectedPanel, setSelectedPanel] = useState("Rate");
@@ -17,18 +16,10 @@ export default function NormalUserTools(props) {
               setSelectedPanel("Rate");
             }}
           />
-          <Tab
-            label="Edit Info"
-            sx={{ fontSize: 20, color: "#0f3554" }}
-            onClick={() => {
-              setSelectedPanel("EditInfo");
-            }}
-          />
         </Tabs>
       </Box>
 
       {selectedPanel === "Rate" && <Rate />}
-      {selectedPanel === "EditInfo" && <EditInfo />}
     </>
   );
 }

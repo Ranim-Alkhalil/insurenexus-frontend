@@ -5,24 +5,10 @@ import { getSessionId } from "../../../../api/SessionIdUtils";
 import { enqueueSnackbar } from "notistack";
 
 export default function EditInfo() {
-  const [newEmail, setNewEmail] = useState("");
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleUpdateEmail = async () => {
-    try {
-      await axios.post(
-        "http://localhost:3000/user/update-email",
-        { newEmail },
-        { headers: { SESSION_ID: getSessionId() } }
-      );
-      enqueueSnackbar("Email updated successfully", { variant: "success" });
-    } catch (error) {
-      enqueueSnackbar("Failed to update email", { variant: "error" });
-    }
-  };
 
   const handleUpdatePhoneNumber = async () => {
     try {
@@ -58,20 +44,15 @@ export default function EditInfo() {
   };
 
   return (
-    <Stack flexDirection={"column"} height={"100%"} width="100%" gap={3} p={3}>
-      <Typography variant="h6" color={"primary"}>
-        Edit Email
-      </Typography>
-      <TextField
-        label="Enter New Email"
-        value={newEmail}
-        onChange={(e) => setNewEmail(e.target.value)}
-        sx={{ width: "400px" }}
-      />
-      <Button variant="contained" color="primary" onClick={handleUpdateEmail}>
-        Update Email
-      </Button>
-
+    <Stack
+      flexDirection={"column"}
+      height={"100%"}
+      width="100%"
+      gap={3}
+      p={3}
+      justifyContent={"flex-start"}
+      alignItems={"flex-start"}
+    >
       <Typography variant="h6" color={"primary"}>
         Edit Phone Number
       </Typography>

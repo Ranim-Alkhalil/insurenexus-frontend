@@ -2,6 +2,7 @@ import React from "react";
 import "./About.css";
 import pic1 from "./pic/pic1.jpg";
 import { Stack } from "@mui/material";
+import Footer from "../footer_section/Footer_pages";
 
 export default function About() {
   return (
@@ -169,6 +170,7 @@ export default function About() {
           </div>
         </div>
       </div>
+      <Footer />
     </Stack>
   );
 }

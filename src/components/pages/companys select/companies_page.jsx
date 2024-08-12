@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./section1.css";
-import pic1 from "./photo/pic1.jpg";
 
 import { Box, Button, Rating, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import { getSessionId } from "../../../api/SessionIdUtils";
+import Footer from "../footer_section/Footer_pages";
 
 export default function Header() {
   const [images, setImages] = useState(() => {
@@ -29,7 +29,7 @@ export default function Header() {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/user/insuranceCompanies", {})
+      .get("http://localhost:3000/user/insuranceCompanies")
       .then((res) => {
         console.log("get is success", res.data);
         setOptions(res.data);
@@ -97,7 +97,7 @@ export default function Header() {
     return rating[b] - rating[a];
   });
   return (
-    <>
+    <Stack sx={{ overflowX: "hidden" }}>
       <section className="shadow-section">
         <div className=" center_div">
           <h3 className="h3style pt-5 pb-5">
@@ -163,6 +163,7 @@ export default function Header() {
           )}
         </div>
       </section>
-    </>
+      <Footer></Footer>
+    </Stack>
   );
 }

@@ -3,7 +3,7 @@ import AddSubscription from "./AddSubscription";
 import AddSubscribedComp from "./AddSubsribedComp";
 import CreateEmployee from "./CreateEmployee";
 import CreateUser from "./CreateUser";
-import AddServices from "./Services";
+
 import { Box, Tab, Tabs } from "@mui/material";
 
 import AddInfo from "./AddInfo";
@@ -43,13 +43,6 @@ export default function InsuranceEmployeeTools(props) {
               setSelectedPanel("Addsubscription");
             }}
           />
-          <Tab
-            label="Add services"
-            sx={{ fontSize: 20, color: "#0f3554" }}
-            onClick={() => {
-              setSelectedPanel("Addservices");
-            }}
-          />
 
           <Tab
             label="Add info"
@@ -61,7 +54,7 @@ export default function InsuranceEmployeeTools(props) {
         </Tabs>
       </Box>
       {selectedPanel === "AddInfo" && <AddInfo />}
-      {selectedPanel === "Addservices" && <AddServices />}
+
       {selectedPanel === "Addcompanymanager" && <CreateEmployee />}
       {selectedPanel === "Addnormaluser" && <CreateUser />}
       {selectedPanel === "Addcompany" && <AddSubscribedComp />}

@@ -28,13 +28,14 @@ export default function Insurances(props) {
       justifyContent={"flex-start"}
       alignItems={"flex-start"}
       p={2}
+      sx={{ overflowX: "hidden" }}
     >
       <Typography variant="h3" color={"#0f3554"}>
         Insurances
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={10}>
         {insurances.map((insurance, index) => (
-          <Grid item key={index} xs={12} sm={6} md={6} lg={6} xl={6}>
+          <Grid item key={index} xs={12} sm={6} md={8} lg={6} xl={5}>
             <Box
               border={1}
               borderRadius={2}
@@ -43,15 +44,17 @@ export default function Insurances(props) {
               p={4}
               sx={{
                 width: {
-                  xs: 1, // Full width on extra-small screens
-                  sm: 500, // 500px on small screens
-                  md: 550, // 550px on medium screens
+                  xs: 1,
+                  sm: 500,
+                  md: 550,
                 },
               }}
             >
               <Box sx={{ fontSize: "1.4rem", mb: 1 }}>Type of insurance :</Box>
               <Box sx={{ fontSize: "1.3rem", mb: 2 }}>
-                <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
+                <CircleIcon
+                  sx={{ fontSize: "small", color: "#CBB26B", mr: 2 }}
+                />
                 {insurance.service_name}
               </Box>
               <Divider color={"#CBB26B"} />
@@ -60,34 +63,27 @@ export default function Insurances(props) {
                 Company Name :
               </Box>
               <Box sx={{ fontSize: "1.3rem", mb: 2 }}>
-                <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
+                <CircleIcon
+                  sx={{ fontSize: "small", color: "#CBB26B", mr: 2 }}
+                />
                 {insurance.company_name}
               </Box>
 
               <Divider color={"#CBB26B"} />
-              <Box sx={{ fontSize: "1.4rem", mt: 2, mb: 1 }}>
-                Start Date :
-                <Typography sx={{ fontSize: "1.2rem", display: "inline" }}>
-                  (d-m-y)
-                </Typography>
-              </Box>
+              <Box sx={{ fontSize: "1.4rem", mt: 2, mb: 1 }}>Start Date :</Box>
               <Box sx={{ fontSize: "1.3rem", mb: 2 }}>
-                <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
+                <CircleIcon
+                  sx={{ fontSize: "small", color: "#CBB26B", mr: 2 }}
+                />
                 {insurance.subscription_started_at}
               </Box>
 
               <Divider color={"#CBB26B"} />
-              <Box sx={{ fontSize: "1.4rem", mt: 2, mb: 1 }}>
-                End Date :
-                <Typography
-                  noWrap
-                  sx={{ fontSize: "1.2rem", display: "inline" }}
-                >
-                  (d-m-y)
-                </Typography>
-              </Box>
+              <Box sx={{ fontSize: "1.4rem", mt: 2, mb: 1 }}>End Date :</Box>
               <Box sx={{ fontSize: "1.3rem" }}>
-                <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
+                <CircleIcon
+                  sx={{ fontSize: "small", color: "#CBB26B", mr: 2 }}
+                />
                 {insurance.subscription_end_at}
               </Box>
             </Box>

@@ -14,6 +14,7 @@ import {
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ValidateSessionApi } from "../../api/security/Session";
 import { GetUserInfo } from "../../api/user/User";
+import Footer from "../pages/footer_section/Footer_pages";
 
 export const GlobalStates = createContext(null);
 
@@ -107,10 +108,7 @@ export default function BaseComponent(props) {
               <Typography>Loading, please wait...</Typography>
             </Stack>
           ) : (
-            <>
-              <Outlet />
-              {/* <Footer /> */}
-            </>
+            <Outlet />
           )}
         </Stack>
       </ThemeProvider>

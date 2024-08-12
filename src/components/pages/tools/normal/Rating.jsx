@@ -65,7 +65,7 @@ export default function Rate(props) {
         }
       )
       .then((response) => {
-        console.log("User added successfully:", response.data);
+        console.log("Rating added successfully", response.data);
         setValue1(null);
         setValue2(null);
         setValue3(null);
@@ -79,8 +79,8 @@ export default function Rate(props) {
         });
       })
       .catch((error) => {
-        console.error("Error adding user:", error);
-        enqueueSnackbar("Failed to Add User to ", {
+        console.error("Error adding", error);
+        enqueueSnackbar("Failed to Add ", {
           variant: "error",
         });
       });

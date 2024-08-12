@@ -22,6 +22,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import CircleIcon from "@mui/icons-material/Circle";
 import { getSessionId } from "../../../api/SessionIdUtils";
 import DownloadIcon from "@mui/icons-material/Download";
+import Footer from "../footer_section/Footer_pages";
 
 export default function Company(props) {
   const [info, setInfo] = useState([]);
@@ -29,11 +30,11 @@ export default function Company(props) {
   const [image, setImage] = useState(null);
   const [comments, setComments] = useState([]);
   const [insurances, setInsurances] = useState([]);
+  const [hasPdf, setHasPdf] = useState(false);
   const { companyName } = useParams();
   useEffect(() => {
     axios
       .get("http://localhost:3000/user/companyInfo", {
-        headers: { SESSION_ID: getSessionId() },
         params: {
           param1: companyName,
         },
@@ -49,7 +50,6 @@ export default function Company(props) {
   useEffect(() => {
     axios
       .get("http://localhost:3000/user/compRate", {
-        headers: { SESSION_ID: getSessionId() },
         params: {
           param1: companyName,
         },
@@ -65,7 +65,6 @@ export default function Company(props) {
   useEffect(() => {
     axios
       .get("http://localhost:3000/user/compComment", {
-        headers: { SESSION_ID: getSessionId() },
         params: {
           param1: companyName,
         },
@@ -81,7 +80,6 @@ export default function Company(props) {
   useEffect(() => {
     axios
       .get("http://localhost:3000/user/compInsu", {
-        headers: { SESSION_ID: getSessionId() },
         params: {
           param1: companyName,
         },
@@ -107,6 +105,22 @@ export default function Company(props) {
       })
       .catch((err) => {
         console.error(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compPdf", {
+        params: { param1: companyName },
+      })
+      .then((response) => {
+        if (response.data) {
+          setHasPdf(true);
+        } else {
+          setHasPdf(false);
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error checking the PDF!", error);
       });
   }, []);
   const handleDownload = () => {
@@ -219,18 +233,22 @@ export default function Company(props) {
           <Typography sx={{ fontSize: "1.4rem" }}>{info.fax}</Typography>
         </Stack>
       </Stack>
-      <Typography variant="h5" color="primary" pt={10} pl={2}>
-        Company brochure
-      </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<DownloadIcon />}
-        onClick={handleDownload}
-        sx={{ ml: 3 }}
-      >
-        Download PDF
-      </Button>
+      {hasPdf && (
+        <>
+          <Typography variant="h5" color="primary" pt={10} pl={2}>
+            Company brochure
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<DownloadIcon />}
+            onClick={handleDownload}
+            sx={{ ml: 3 }}
+          >
+            Download PDF
+          </Button>
+        </>
+      )}
 
       <Typography variant="h4" color="primary" pt={10} pl={2}>
         Types of Insurances
@@ -289,6 +307,7 @@ export default function Company(props) {
           <Typography pb={5}>No comments available.</Typography>
         )}
       </Stack>
+      <Footer />
     </Stack>
   );
 }

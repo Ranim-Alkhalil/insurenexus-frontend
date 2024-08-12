@@ -2,6 +2,7 @@ import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import ManagerInfo from "./Info";
 import InsurancesEmp from "./Insurances";
+import EditInfo from "./EditInfo";
 
 export default function CompanyEmployeeProfile(props) {
   const [selectedPanel, setSelectedPanel] = useState("personalInfo");
@@ -23,11 +24,19 @@ export default function CompanyEmployeeProfile(props) {
               setSelectedPanel("Insurances");
             }}
           />
+          <Tab
+            label="Edit Info"
+            sx={{ fontSize: 20, color: "#0f3554" }}
+            onClick={() => {
+              setSelectedPanel("EditInfo");
+            }}
+          />
         </Tabs>
       </Box>
 
       {selectedPanel === "personalInfo" && <ManagerInfo />}
       {selectedPanel === "Insurances" && <InsurancesEmp />}
+      {selectedPanel === "EditInfo" && <EditInfo />}
     </>
   );
 }

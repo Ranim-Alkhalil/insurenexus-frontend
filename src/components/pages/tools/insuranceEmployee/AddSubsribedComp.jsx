@@ -72,7 +72,7 @@ export default function AddSubscribedComp(props) {
       alignItems={"flex-start"}
       p={2}
     >
-      <Typography variant="h3" color={"primary"} pb={5}>
+      <Typography variant="h3" color={"primary"}>
         Add company
       </Typography>
 

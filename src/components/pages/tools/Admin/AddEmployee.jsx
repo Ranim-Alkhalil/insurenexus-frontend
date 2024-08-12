@@ -12,8 +12,6 @@ import { enqueueSnackbar } from "notistack";
 import { getSessionId } from "../../../../api/SessionIdUtils";
 
 export default function AddInsuNexus(props) {
-  const [company_name, setcompany_name] = useState(null);
-  const [options, setOptions] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -70,13 +68,13 @@ export default function AddInsuNexus(props) {
           setEmail("");
           setPhoneNum("");
 
-          enqueueSnackbar("User Added to " + company_name, {
+          enqueueSnackbar("User is Added", {
             variant: "success",
           });
         })
         .catch((error) => {
           console.error("Error adding user:", error);
-          enqueueSnackbar("Failed to Add User to " + company_name, {
+          enqueueSnackbar("Failed to Add User  ", {
             variant: "error",
           });
         });

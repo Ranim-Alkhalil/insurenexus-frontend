@@ -1,22 +1,48 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Button,
-  Fade,
-  Stack,
-  TextField,
-  Typography,
-  Zoom,
-} from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import { useContext, useState, useEffect } from "react";
-import { GlobalStates } from "../../base/BaseComponent";
-import { SignInApi } from "../../../api/security/Session";
-import { Link, useNavigate } from "react-router-dom";
-import { GetUserInfo } from "../../../api/user/User";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ForgotPassword(props) {
   const [email, setEmail] = useState("");
-  function handleFirst() {}
+  const [token, setToken] = useState("");
+  const [showTokenField, setShowTokenField] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
+  async function handleFirst() {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/forgotpass",
+        { email }
+      );
+      if (response.data.success) {
+        setShowTokenField(true);
+        setErrorMessage(""); // Clear any previous errors
+      } else {
+        setErrorMessage(response.data.message);
+      }
+    } catch (error) {
+      setErrorMessage("Failed to send email. Please try again.");
+    }
+  }
+
+  async function handleTokenVerification() {
+    try {
+      const response = await axios.post("http://localhost:3000/user/token", {
+        email,
+        token,
+      });
+      if (response.data.success) {
+        navigate("/changePassword", { state: { email } });
+      } else {
+        setErrorMessage(response.data.message);
+      }
+    } catch (error) {
+      setErrorMessage("Failed to verify token. Please try again.");
+    }
+  }
+
   return (
     <Stack
       flexDirection={"column"}
@@ -33,9 +59,7 @@ export default function ForgotPassword(props) {
         variant="outlined"
         required
         sx={{ width: 300 }}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
+        onChange={(e) => setEmail(e.target.value)}
         value={email}
       />
       <Button
@@ -46,6 +70,35 @@ export default function ForgotPassword(props) {
       >
         Submit
       </Button>
+      {showTokenField && (
+        <>
+          <TextField
+            label="Token"
+            type="text"
+            variant="outlined"
+            required
+            sx={{ width: 300 }}
+            onChange={(e) => setToken(e.target.value)}
+            value={token}
+          />
+          <Typography variant="body2" color="textSecondary">
+            Please check your email for the token.
+          </Typography>
+          <Button
+            color="primary"
+            variant="contained"
+            sx={{ width: 120 }}
+            onClick={handleTokenVerification}
+          >
+            Verify Token
+          </Button>
+        </>
+      )}
+      {errorMessage && (
+        <Typography variant="body2" color="error">
+          {errorMessage}
+        </Typography>
+      )}
     </Stack>
   );
 }

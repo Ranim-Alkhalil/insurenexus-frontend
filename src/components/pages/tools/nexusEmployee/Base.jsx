@@ -44,17 +44,17 @@ export default function NexusEmployeeTools(props) {
             }}
           />
           <Tab
-            label="Add facility for company"
-            sx={{ fontSize: 20, color: "#0f3554" }}
-            onClick={() => {
-              setSelectedPanel("CompanyFacility");
-            }}
-          />
-          <Tab
             label="Add service for company"
             sx={{ fontSize: 20, color: "#0f3554" }}
             onClick={() => {
               setSelectedPanel("CompanyService");
+            }}
+          />
+          <Tab
+            label="Add facility for company"
+            sx={{ fontSize: 20, color: "#0f3554" }}
+            onClick={() => {
+              setSelectedPanel("CompanyFacility");
             }}
           />
         </Tabs>

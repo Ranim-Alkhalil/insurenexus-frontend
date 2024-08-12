@@ -1,6 +1,6 @@
 import {
+  Autocomplete,
   Button,
-  ButtonGroup,
   Stack,
   Table,
   TableBody,
@@ -13,18 +13,47 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { getSessionId } from "../../../../api/SessionIdUtils";
 
 export default function Facilities(props) {
-  // const [facilitiyTypes, setFacilityTypes] = useState([]);
+  const [services, setServices] = useState([]);
+  const [selectedService, setSelectedService] = useState(null);
+  const [facilities, setFacilities] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get("http://localhost:3000/facilities").then(
-  //     (res) => {
-  //       setFacilityTypes(res.data);
-  //     },
-  //     (err) => {}
-  //   );
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/userInsurances", {
+        headers: { SESSION_ID: getSessionId() },
+      })
+      .then(
+        (res) => {
+          setServices(res.data);
+          console.log("Fetched insurance services successfully");
+        },
+        (err) => {
+          console.error("Failed to fetch insurance services", err);
+        }
+      );
+  }, []);
+
+  useEffect(() => {
+    if (selectedService) {
+      axios
+        .get("http://localhost:3000/user/userFacilities", {
+          headers: { SESSION_ID: getSessionId() },
+          params: { param1: selectedService },
+        })
+        .then(
+          (res) => {
+            setFacilities(res.data);
+            console.log("Fetched facilities successfully");
+          },
+          (err) => {
+            console.error("Failed to fetch facilities", err);
+          }
+        );
+    }
+  }, [selectedService]);
 
   return (
     <Stack
@@ -39,46 +68,16 @@ export default function Facilities(props) {
       <Typography variant="h3" color={"#0f3554"}>
         Facilities
       </Typography>
-      <Stack flexDirection={"row"} flexWrap={"nowrap"} gap={170}>
-        <ButtonGroup
-          size="large"
-          aria-label="Large button group"
-          sx={{ mt: 2 }}
-        >
-          <Button
-            sx={{
-              color: "#0f3554",
-              borderColor: "#0f3554",
-            }}
-          >
-            health
-          </Button>
-          <Button
-            sx={{
-              color: "#0f3554",
-              borderColor: "#0f3554",
-            }}
-          >
-            car
-          </Button>
-          {/*{facilitiyTypes.map((ftype) => {
-          return (
-            <Button
-              sx={{
-                color: "#17507f",
-                borderColor: "#17507f",
-                bgcolor: "white",
-              }}
-            >
-              {ftype}
-            </Button>
-          );
-        })}*/}
-        </ButtonGroup>
-        {/* search or filter */}
-      </Stack>
+      <Autocomplete
+        options={services}
+        value={selectedService}
+        onChange={(event, newValue) => setSelectedService(newValue)}
+        renderInput={(params) => (
+          <TextField {...params} label="Select Service" />
+        )}
+        sx={{ width: 300, mb: 2 }}
+      />
       <TableContainer sx={{ width: "100%", mt: 5 }}>
-        {/*sticky not working */}
         <Table>
           <TableHead>
             <TableRow>
@@ -115,23 +114,25 @@ export default function Facilities(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                hospital
-              </TableCell>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                hamza
-              </TableCell>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                amman
-              </TableCell>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                street
-              </TableCell>
-              <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
-                765465
-              </TableCell>
-            </TableRow>
+            {facilities.map((facility, index) => (
+              <TableRow key={index}>
+                <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
+                  {facility.type}
+                </TableCell>
+                <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
+                  {facility.name}
+                </TableCell>
+                <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
+                  {facility.governorate}
+                </TableCell>
+                <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
+                  {facility.location}
+                </TableCell>
+                <TableCell sx={{ fontSize: "1.4rem", color: "#0f3554" }}>
+                  {facility.phone_number}
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

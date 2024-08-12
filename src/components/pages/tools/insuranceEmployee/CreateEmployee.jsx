@@ -23,7 +23,7 @@ export default function CreateEmployee(props) {
   const [errorFields, setErrorFields] = useState([]);
   const nameRegex = /^[a-zA-Z]{1,15}$/;
   const NIDRegex = /^\d{10}$/;
-  const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
+  const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   const phoneRegex = /^07\d{8}$/;
   const handleAdd = () => {
     console.log(firstName);
