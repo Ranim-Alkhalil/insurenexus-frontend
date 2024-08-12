@@ -1,111 +1,317 @@
 
-/*images */
-import logo from './image/logo.jpeg';
-import cover from './image/cover.jpg';
-import company from './image/company.jpg';
-
-import './design/Style.css';
-
-
+import {
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Rating,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import cover from "./image/cover.jpg";
+import { useParams } from "react-router-dom";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import HomeIcon from "@mui/icons-material/Home";
+import MailIcon from "@mui/icons-material/Mail";
+import FaxIcon from "@mui/icons-material/Fax";
+import DescriptionIcon from "@mui/icons-material/Description";
+import CircleIcon from "@mui/icons-material/Circle";
+import { getSessionId } from "../../../api/SessionIdUtils";
+import DownloadIcon from "@mui/icons-material/Download";
+import Footer from "../footer_section/Footer_pages";
 
 export default function Company(props) {
+  const [info, setInfo] = useState([]);
+  const [rate, setRate] = useState(null);
+  const [image, setImage] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [insurances, setInsurances] = useState([]);
+  const [hasPdf, setHasPdf] = useState(false);
+  const { companyName } = useParams();
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/companyInfo", {
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setInfo(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compRate", {
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setRate(res.data.rating);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compComment", {
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setComments(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compInsu", {
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setInsurances(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compImage", {
+        params: {
+          param1: companyName,
+        },
+      })
+      .then((res) => {
+        console.log("get is success", res.data);
+        setImage(res.data.image);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/compPdf", {
+        params: { param1: companyName },
+      })
+      .then((response) => {
+        if (response.data) {
+          setHasPdf(true);
+        } else {
+          setHasPdf(false);
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error checking the PDF!", error);
+      });
+  }, []);
+  const handleDownload = () => {
+    axios
+      .get("http://localhost:3000/user/compPdf", {
+        params: { param1: companyName },
+        responseType: "blob",
+      })
+      .then((response) => {
+        const url = window.URL.createObjectURL(
+          new Blob([response.data], { type: "application/pdf" })
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "document.pdf");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      })
+      .catch((error) => {
+        console.error("There was an error downloading the PDF!", error);
+      });
+  };
   return (
-    <>
-      <html lang="en">
-        <head>
-          <meta charSet="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>company_page</title>
-         
-          {/* for icons*/}
-          <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
-          {/* FOR BOOTSTRAP*/}
-          <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-            crossOrigin="anonymous"
+    <Stack
+      flexDirection={"column"}
+      height={"100%"}
+      width="100%"
+      gap={3}
+      justifyContent={"flex-start"}
+      alignItems={"flex-start"}
+      sx={{ overflowX: "hidden" }}
+    >
+      <img src={cover} />
+
+      <Stack
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
+        pl={2}
+      >
+        <Typography variant="h3" color="primary">
+          {companyName}
+        </Typography>
+        <Rating
+          value={rate}
+          precision={0.5}
+          readOnly
+          sx={{ pt: 2, pl: 2, pr: 8 }}
+        />
+
+        {image && (
+          <img
+            src={image}
+            alt="Company logo"
+            style={{
+              maxWidth: "300px",
+              maxHeight: "400px",
+              width: "auto",
+              height: "auto",
+              objectFit: "contain",
+            }}
           />
-        </head>
+        )}
+      </Stack>
 
-        <body >
-          <nav className="navbar bg-body-tertiary">
-            <div className="container-fluid">
-              <a className="navbar-brand" href="#">
-                <img src={logo} alt="Logo" width="50" height="50" className="image-logo"  />
-                  <span style={{ color: 'white' }}>InsureNexus</span>
-               
-              </a>
-            </div>
-          </nav>
-        
+      <Divider
+        sx={{ width: "100%", mt: 1, mb: 1, borderWidth: "1.5px" }}
+        color={"#CBB26B"}
+      />
+      <Stack direction="column" spacing={3} pl={2}>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <DescriptionIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem", width: "1200px" }}>
+            {info.description}
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <LocalPhoneIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>
+            {info.phone_number}
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <AlternateEmailIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>{info.email}</Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <HomeIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>{info.address}</Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <MailIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>{info.mail}</Typography>
+        </Stack>
+        <Stack direction="row" spacing={6} pl={2} flexWrap={"wrap"}>
+          <Typography>
+            <FaxIcon sx={{ color: "#CBB26B", fontSize: 35 }} />
+          </Typography>
+          <Typography sx={{ fontSize: "1.4rem" }}>{info.fax}</Typography>
+        </Stack>
+      </Stack>
+      {hasPdf && (
+        <>
+          <Typography variant="h5" color="primary" pt={10} pl={2}>
+            Company brochure
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<DownloadIcon />}
+            onClick={handleDownload}
+            sx={{ ml: 3 }}
+          >
+            Download PDF
+          </Button>
+        </>
+      )}
 
-          <div className="page">
-            <div className="cover">
-              <img src={cover} alt="" />
-            </div>
-{/* for line under the cover photo */}
-            <div className="line"></div>
+      <Typography variant="h4" color="primary" pt={10} pl={2}>
+        Types of Insurances
+      </Typography>
+      <List sx={{ pl: 2 }}>
+        {insurances.map((insurance, index) => (
+          <ListItem key={index} disableGutters>
+            <CircleIcon sx={{ fontSize: "small", color: "#CBB26B" }} />
+            <ListItemText
+              primary={insurance}
+              primaryTypographyProps={{
+                color: "primary",
+                fontSize: "1.5rem",
+                pl: 2,
+              }}
+            />
+          </ListItem>
+        ))}
+      </List>
+      <Divider
+        sx={{ width: "100%", mt: 1, borderWidth: "1.5px" }}
+        color={"#CBB26B"}
+      />
+      <Stack
+        flexDirection={"column"}
+        height={"100%"}
+        width="90%"
+        gap={2}
+        justifyContent={"center"}
+        alignItems={"center"}
+        pl={2}
+      >
+        <Typography variant="h4" color="primary" mt={4}>
+          Users Reviews
+        </Typography>
+        {comments.length > 0 ? (
+          comments.map((comment, index) => (
+            <Paper
+              key={index}
+              elevation={3}
+              style={{
+                padding: "10px",
+                marginTop: "10px",
+                marginBottom: "20px",
 
-            <div className="compay_image">
-              <img src={company} alt="" />
-              <caption>
-                <div className="c_name">
-                  <span>Company Name</span>
-                  <div className="box_info">
-                    company infoooo Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil, incidunt! Ducimus
-                    accusantium quaerat voluptatibus pariatur, tempore iste distinctio eveniet enim? Distinctio vitae
-                    assumenda ad nostrum odit, adipisci incidunt voluptatibus repudiandae.
-                  </div>
-                </div>
-              </caption>
-            </div>
+                width: "1000px",
+                height: "auto",
+              }}
+            >
+              <Typography variant="h6" color={"primary"}>
+                {comment}
+              </Typography>
+            </Paper>
+          ))
+        ) : (
+          <Typography pb={5}>No comments available.</Typography>
+        )}
+      </Stack>
+      <Footer />
+    </Stack>
 
 
-            <div className="cards">
-              <div className="card mb-3" style={{ maxWidth: '540px' }}>
-                <div className="row g-0">
-                  <div className="col-md-4">
-                    <i className="ri-hospital-line"></i>
-                  </div>
-                  <div className="col-md-8">
-                    <div className="card-body">
-                      <h5 className="card-title">Health</h5>
-                      <p className="text"  >
-                        .....Insurance - Jordan offers medical insurance programs specifically designed to meet the needs of
-                        all institutions and individuals in Jordan, through medical insurance programs that aim to provide
-                        the highest level of insurance protection for individuals and their families in the face of the
-                        continuous escalation in medical treatment costs.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="card mb-3" style={{ maxWidth: '540px' }}>
-                <div className="row g-0">
-                  <div className="col-md-4">
-                    <i className="ri-car-line"></i>
-                  </div>
-                  <div className="col-md-8">
-                    <div className="card-body">
-                      <h5 className="card-title">Cars</h5>
-                      <p className="text">
-                        ..... Insurance - Jordan offers insurance programs.... specifically designed to meet the needs of all
-                        institutions and individuals in Jordan, through insurance programs.... aiming to provide the highest
-                        level of insurance protection for individuals and their families in the face of the continuous
-                        escalation in costs.. ....
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <i className="ri-arrow-right-double-line"></i>
-            </div>
-          </div>
-        </body>
-      </html>
-    </>
   );
 }
