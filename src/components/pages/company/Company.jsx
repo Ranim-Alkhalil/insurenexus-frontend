@@ -1,3 +1,4 @@
+
 import {
   Button,
   Divider,
@@ -309,5 +310,8 @@ export default function Company(props) {
       </Stack>
       <Footer />
     </Stack>
+
+
+
   );
 }

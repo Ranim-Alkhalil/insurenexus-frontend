@@ -1,3 +1,4 @@
+
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -8,6 +9,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import BaseComponent from "./components/base/BaseComponent";
 import SignIn from "./components/pages/signIn/SignIn";
+
 
 import { SnackbarProvider } from "notistack";
 import Profile from "./components/pages/profile/Base";
@@ -99,9 +101,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+
     <SnackbarProvider>
       <CssBaseline />
       <RouterProvider router={router} />
     </SnackbarProvider>
   </React.StrictMode>
 );
+
